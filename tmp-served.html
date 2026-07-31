@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <script type="module" src="/@vite/client"></script>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/input.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Iniciar sesión - Plaindaber</title>
+  </head>
+  <body class="min-h-screen bg-slate-950 text-slate-900">
+    <main class="flex min-h-screen items-center justify-center px-4 py-10 sm:px-6 lg:px-8">
+      <section class="w-full max-w-6xl overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-2xl shadow-slate-900/10">
+        <div class="w-full bg-yellow-300 p-4 flex items-center gap-4 rounded-t-[2rem]">
+          <img src="/logo-plaindaber-nuevo.png" alt="Plaindaber" class="h-8 w-auto ml-2" />
+        </div>
+        <div class="grid lg:grid-cols-[1.1fr_0.9fr]">
+          <div class="flex flex-col justify-between bg-slate-950 p-8 text-white sm:p-10 lg:p-12">
+            <div>
+              <p class="text-sm font-semibold uppercase tracking-[0.3em] text-slate-400">
+                Plaindaber
+              </p>
+              <h1 class="mt-4 text-3xl font-semibold leading-tight sm:text-4xl">
+                Aprende, practica y conecta con tu comunidad.
+              </h1>
+              <p class="mt-4 max-w-md text-sm leading-6 text-slate-300 sm:text-base">
+                Accede a cursos, foros y videollamadas desde un solo lugar.
+              </p>
+            </div>
+
+            <div class="mt-8 rounded-2xl border border-slate-800 bg-slate-900/70 p-4 sm:p-5">
+              <p class="text-sm font-medium text-slate-200">¿Nuevo por aquí?</p>
+              <p class="mt-2 text-sm leading-6 text-slate-400">
+                Crea tu cuenta y empieza tu camino en minutos.
+              </p>
+            </div>
+          </div>
+
+          <div class="p-8 sm:p-10 lg:p-12">
+            <div class="flex items-center justify-between gap-3">
+              <div>
+                <p class="text-sm font-semibold text-slate-500">Bienvenido de nuevo</p>
+                <h2 class="text-2xl font-bold text-slate-900">Inicia sesión</h2>
+              </div>
+              <a href="#" class="text-sm font-medium text-sky-600 transition hover:text-sky-700">
+                ¿Olvidaste tu contraseña?
+              </a>
+            </div>
+
+            <form class="mt-8 space-y-5">
+              <div>
+                <label for="email" class="mb-2 block text-sm font-medium text-slate-700">
+                  Correo electrónico
+                </label>
+                <input
+                  id="email"
+                  type="email"
+                  placeholder="tu@correo.com"
+                  class="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm outline-none transition focus:border-sky-500 focus:bg-white focus:ring-2 focus:ring-sky-200"
+                />
+              </div>
+
+              <div>
+                <label for="password" class="mb-2 block text-sm font-medium text-slate-700">
+                  Contraseña
+                </label>
+                <input
+                  id="password"
+                  type="password"
+                  placeholder="••••••••"
+                  class="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm outline-none transition focus:border-sky-500 focus:bg-white focus:ring-2 focus:ring-sky-200"
+                />
+              </div>
+
+              <button
+                type="submit"
+                class="w-full rounded-xl bg-sky-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-sky-700"
+              >
+                Entrar
+              </button>
+            </form>
+
+            <div class="mt-6 flex items-center gap-3">
+              <div class="h-px flex-1 bg-slate-200"></div>
+              <span class="text-xs font-semibold uppercase tracking-[0.25em] text-slate-400">
+                o continúa con
+              </span>
+              <div class="h-px flex-1 bg-slate-200"></div>
+            </div>
+
+            <button
+              type="button"
+              class="mt-6 flex w-full items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+            >
+              <span class="text-base">G</span>
+              Continuar con Google
+            </button>
+
+            <p class="mt-6 text-center text-sm text-slate-500">
+              ¿No tienes cuenta?
+              <a href="#" class="ml-1 font-semibold text-sky-600 hover:text-sky-700">
+                Regístrate
+              </a>
+            </p>
+          </div>
+        </div>
+      </section>
+      <footer class="mt-6 flex items-center justify-center">
+        <img src="/LOGO%20desarrollos%20aleshera.png" alt="Desarrollos Aleshera" class="h-6 w-auto opacity-95" />
+      </footer>
+    </main>
+  </body>
+</html>
