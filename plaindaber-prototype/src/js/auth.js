@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function () {
       if (email !== validEmail || password !== validPassword) {
         showLoginAlert();
       } else {
-        alert('Acceso correcto');
+        window.location.href = 'dashboard.html';
       }
     });
   }
