@@ -6,3 +6,10 @@ export default defineConfig({
     tailwindcss(),
   ],
 })
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+
+export default defineConfig({
+  plugins: [react()],
+  base: '/plaindaber-prototipo1./', // ¡Las barras al inicio y final son obligatorias
+})
