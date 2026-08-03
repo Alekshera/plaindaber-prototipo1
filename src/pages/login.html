@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Iniciar sesión - Plaindaber</title>
+    <script type="module" crossorigin src="/plaindaber-prototipo1/assets/auth-BIb3nOxN.js"></script>
+    <link rel="stylesheet" crossorigin href="/plaindaber-prototipo1/assets/auth-CWovMqc_.css">
+  </head>
+  <body class="min-h-screen bg-[#FDFBF7] text-slate-900">
+    <main class="flex min-h-screen items-center justify-center px-4 py-10 sm:px-6 lg:px-8">
+      <section class="w-full max-w-6xl overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-2xl shadow-slate-900/10">
+        <div class="w-full bg-[#FFD166] p-4 flex items-center gap-4 rounded-t-[2rem]">
+          <img src="../public/logo-plaindaber-nuevo.png" alt="Plaindaber" class="h-16 w-auto ml-2 rounded-2xl" />
+        </div>
+        <div class="grid lg:grid-cols-[0.95fr_1.05fr]">
+          <div class="p-8 sm:p-10 lg:p-12">
+            <div class="flex items-center justify-between gap-3">
+              <div>
+                <p class="text-sm font-semibold text-slate-500">Bienvenido de nuevo</p>
+                <h2 class="text-2xl font-bold text-slate-900">Inicia sesión</h2>
+              </div>
+              <a href="#" class="text-sm font-medium text-[#7B1FA2] transition hover:text-[#5a0f78]">
+                ¿Olvidaste tu contraseña?
+              </a>
+            </div>
+
+            <form class="mt-8 space-y-5">
+              <div>
+                <label for="email" class="mb-2 block text-sm font-medium text-slate-700">
+                  Correo electrónico
+                </label>
+                <input
+                  id="email"
+                  type="email"
+                  placeholder="tu@correo.com"
+                  class="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm outline-none transition focus:border-sky-500 focus:bg-white focus:ring-2 focus:ring-sky-200"
+                />
+              </div>
+
+              <div>
+                <label for="password" class="mb-2 block text-sm font-medium text-slate-700">
+                  Contraseña
+                </label>
+                <input
+                  id="password"
+                  type="password"
+                  placeholder="••••••••"
+                  class="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm outline-none transition focus:border-sky-500 focus:bg-white focus:ring-2 focus:ring-sky-200"
+                />
+              </div>
+
+              <button
+                type="submit"
+                class="w-full rounded-xl bg-[#7B1FA2] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[#5a0f78]"
+              >
+                Entrar
+              </button>
+            </form>
+
+            <p class="mt-6 text-center text-sm text-slate-500">
+              ¿No tienes cuenta?
+              <a href="registro.html" class="ml-1 font-semibold text-sky-600 hover:text-sky-700">
+                Regístrate
+              </a>
+            </p>
+          </div>
+
+          <div class="flex flex-col justify-between bg-[#FDFBF7] p-8 text-slate-900 sm:p-10 lg:p-12">
+            <div>
+              <p class="text-sm font-semibold uppercase tracking-[0.3em] text-slate-600">
+                Acerca de Plaindaber
+              </p>
+              <h1 class="mt-4 text-3xl font-semibold leading-tight sm:text-4xl">
+                Plataforma Interactiva de diversas áreas del saber
+              </h1>
+              <p class="mt-4 max-w-md text-sm leading-6 text-slate-700 sm:text-base">
+                Es una plataforma de aprendizaje en línea que conecta maestros que desean publicar sus cursos con alumnos deseosos de aprender.
+              </p>
+              <p class="mt-4 max-w-md text-sm leading-6 text-slate-700 sm:text-base">
+                Si eres un maestro, regístrate y danos tu idea de curso para publicarlo en la plataforma.
+              </p>
+              <p class="mt-4 max-w-md text-sm leading-6 text-slate-700 sm:text-base">
+                Si eres estudiante, inscríbete y descubre los cursos que tenemos para ti.
+              </p>
+            </div>
+
+            <div class="mt-8 rounded-2xl border border-[#1A3B5C] bg-[#1A3B5C] h-[96px] p-4 sm:p-5">
+              <div class="flex h-full items-center justify-between gap-4">
+                <p class="text-sm font-medium text-white">Diseñado por:</p>
+                <div class="inline-flex h-16 min-w-[64px] items-center justify-center rounded-3xl border border-white/20 bg-white/10 px-4">
+                  <img src="../public/LOGO%20desarrollos%20aleshera.png" alt="Desarrollos Aleshera" class="h-16 w-auto rounded-2xl opacity-95" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <footer class="mt-6 flex items-center justify-center">
+     
+      </footer>
+    </main>
+
+    <!--Alertas por errores en el registro-->
+
+    <div id="login-alert" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/40 p-4">
+      <div class="w-full max-w-md rounded-[2rem] border border-slate-300 bg-[#F7F9FC] p-6 shadow-2xl shadow-slate-900/10">
+        <h3 class="text-lg font-semibold text-slate-900">Alert</h3>
+        <p id="login-alert-message" class="mt-3 text-sm leading-6 text-slate-700">
+          El usuario o contraseña no existen, ¿Ya estás registrado?
+        </p>
+        <div class="mt-6 grid grid-cols-2 gap-4">
+          <button id="login-alert-yes" class="rounded-xl bg-[#7B1FA2] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[#5a0f78]">
+            Si
+          </button>
+          <button id="login-alert-no" class="rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white transition hover:bg-slate-700">
+            No
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="login-error-alert" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/40 p-4">
+      <div class="w-full max-w-md rounded-[2rem] border border-slate-300 bg-[#F7F9FC] p-6 shadow-2xl shadow-slate-900/10">
+        <h3 class="text-lg font-semibold text-slate-900">Alert</h3>
+        <p class="mt-3 text-sm leading-6 text-slate-700">
+          Introduce el correo electronico y la contraseña correcta.
+        </p>
+        <div class="mt-6">
+          <button id="login-error-accept" class="w-full rounded-xl bg-[#7B1FA2] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[#5a0f78]">
+            Aceptar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="login-empty-alert" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/40 p-4">
+      <div class="w-full max-w-md rounded-[2rem] border border-slate-300 bg-[#F7F9FC] p-6 shadow-2xl shadow-slate-900/10">
+        <h3 class="text-lg font-semibold text-slate-900">Alert</h3>
+        <p class="mt-3 text-sm leading-6 text-slate-700">
+          Ingresa un usuario y contraseña para ingresar.
+        </p>
+        <div class="mt-6">
+          <button id="login-empty-accept" class="w-full rounded-xl bg-[#7B1FA2] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[#5a0f78]">
+            Aceptar
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>
