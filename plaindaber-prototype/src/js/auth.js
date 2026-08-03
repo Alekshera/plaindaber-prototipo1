@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function () {
       if (email !== validEmail || password !== validPassword) {
         showLoginAlert();
       } else {
-        window.location.href = 'dashboard.html';
+        window.location.href = './dashboard.html';
       }
     });
   }
@@ -222,7 +222,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (alertNo) {
     alertNo.addEventListener('click', function () {
-      window.location.href = '../pages/registro.html';
+      window.location.href = './registro.html';
     });
   }
 
