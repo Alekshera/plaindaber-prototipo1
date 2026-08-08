@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Huertas Orgánicas en la Ciudad · PLAINDABER</title>
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tipografías -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Estilos personalizados -->
+    <link rel="stylesheet" href="../css/styles.css" />
+</head>
+<body class="bg-[#FDFBF7]">
+
+    <!-- ==========================================================
+         SIDEBAR FIJO
+         ========================================================== -->
+    <div class="sidebar text-white">
+        <!-- Logo PLAINDABER -->
+        <div class="logo-wrap">
+            <img src="/logo-plaindaber-nuevo.png" alt="Plaindaber" />
+        </div>
+
+        <!-- Navegación principal -->
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item" title="Dashboard">
+                <svg class="nav-icon w-5 h-5" fill="none" stroke="#FFD54F" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 12l2-3m0 0l7-4 7 4M5 9v10a1 1 0 001 1h12a1 1 0 001-1V9m-9 11l4-4m0 0l4 4m-4-4V3"></path>
+                </svg>
+                <span class="sidebar-tooltip">Dashboard</span>
+            </a>
+
+            <a href="cursos.html" class="nav-item active">
+                <svg class="nav-icon w-5 h-5" fill="none" stroke="#E8913B" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 6.253v13m0-13C10.5 6.253 2 10.998 2 17.25c0 5.25 3.75 9.15 10 9.15s10-3.9 10-9.15c0-6.252-8.5-10.997-10-10.997z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 12l-3 2-1 3-2-2-3 1" fill="none"></path>
+                </svg>
+                <span class="sidebar-tooltip">Cursos</span>
+            </a>
+
+            <a href="foro.html" class="nav-item">
+                <svg class="nav-icon w-5 h-5" fill="none" stroke="#C27CD6" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path>
+                </svg>
+                <span class="sidebar-tooltip">Foro</span>
+            </a>
+
+            <a href="videollamada.html" class="nav-item">
+                <svg class="nav-icon w-5 h-5" fill="none" stroke="#7EB0E8" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                </svg>
+                <span class="sidebar-tooltip">Videollamadas</span>
+            </a>
+
+            <a href="#" class="nav-item">
+                <svg class="nav-icon w-5 h-5" fill="none" stroke="#B0A0DC" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+                <span class="sidebar-tooltip">Configuración</span>
+            </a>
+        </nav>
+
+        <!-- Perfil de usuario: avatar y salir -->
+        <div class="user-profile">
+            <div class="avatar" id="userAvatar">MG</div>
+            <button onclick="logout()" class="logout-btn" title="Cerrar Sesión">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- ==========================================================
+         ÁREA PRINCIPAL
+         ========================================================== -->
+    <main class="main-content">
+
+        <!-- Barra superior horizontal (igual que Cursos y Dashboard) -->
+        <div class="top-banner mb-8">
+            <div class="top-banner-inner w-full">
+                <div class="min-w-0">
+                    <a href="cursos.html" class="back-link">← Volver a cursos</a>
+                    <h1 class="banner-title" id="pageTitle">Huertas Orgánicas en la Ciudad</h1>
+                </div>
+                <a href="modulo.html?id=1" id="linkModuloDetalle" class="btn btn-primary banner-cta">Abrir módulo interactivo →</a>
+            </div>
+        </div>
+
+        <!-- Fila: lista de módulos + contenido detallado -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+            <!-- Columna izquierda: lista de módulos (acordeón) -->
+            <section class="module-list" aria-label="Lista de módulos">
+                <h2 class="section-title text-xl">Módulos del curso</h2>
+                <div id="moduleList" class="flex flex-col gap-3"></div>
+            </section>
+
+            <!-- Columna derecha: contenido del módulo seleccionado -->
+            <section id="contentPanel" class="lg:col-span-2" aria-live="polite">
+                <!-- Inserto aquí el contenido dinámico mediante JS -->
+            </section>
+        </div>
+    </main>
+
+    <!-- ==========================================================
+         SCRIPT DE LA PÁGINA
+         ========================================================== -->
+    <script src="../js/curso_huerta.js"></script>
+
+    <!-- Enlace al detalle de módulo: apunta al módulo activo del curso -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const enlace = document.getElementById('linkModuloDetalle');
+            if (!enlace) return;
+            const activo = localStorage.getItem('moduloGlobalActivo');
+            const modulos = (window.DATA && window.DATA.modulos) || [];
+            const id = activo && modulos.some(m => Number(m.id) === Number(activo)) ? Number(activo) : 1;
+            enlace.setAttribute('href', 'modulo.html?id=' + id);
+        });
+    </script>
+</body>
+</html>

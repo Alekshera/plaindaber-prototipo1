@@ -1,12 +1,453 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard - Plaindaber</title>
-  </head>
-  <body>
-    <h1>Dashboard</h1>
-    <p>Vista principal del usuario.</p>
-  </body>
+    <title>Dashboard - PLAINDABER</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/dashboard.css" />
+    <script type="module" src="../js/app.js"></script>
+</head>
+<body class="bg-[#FDFBF7]">
+  <!-- Sidebar -->
+  <div class="sidebar text-white">
+    <!-- Logo -->
+    <div class="logo-wrap">
+      <img src="/logo-plaindaber-nuevo.png" alt="Plaindaber" />
+    </div>
+
+        <!-- Navigation -->
+        <nav class="sidebar-nav">
+            <a href="#" class="nav-item active">
+                <svg class="nav-icon w-5 h-5" fill="none" stroke="#FFD54F" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 12l2-3m0 0l7-4 7 4M5 9v10a1 1 0 001 1h12a1 1 0 001-1V9m-9 11l4-4m0 0l4 4m-4-4V3"></path>
+                </svg>
+                <span class="sidebar-tooltip">Dashboard</span>
+            </a>
+            <a href="cursos.html" class="nav-item">
+                <svg class="nav-icon w-5 h-5" fill="none" stroke="#E8913B" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 6.253v13m0-13C10.5 6.253 2 10.998 2 17.25c0 5.25 3.75 9.15 10 9.15s10-3.9 10-9.15c0-6.252-8.5-10.997-10-10.997z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 12l-3 2-1 3-2-2-3 1" fill="none"></path>
+                </svg>
+                <span class="sidebar-tooltip">Cursos</span>
+            </a>
+
+            <a href="foro.html" class="nav-item">
+                <svg class="nav-icon w-5 h-5" fill="none" stroke="#C27CD6" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path>
+                </svg>
+                <span class="sidebar-tooltip">Foro</span>
+                <span class="notification-badge" id="forumNotification" style="display: none;"></span>
+            </a>
+
+            <a href="videollamada.html" class="nav-item">
+                <svg class="nav-icon w-5 h-5" fill="none" stroke="#7EB0E8" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                </svg>
+                <span class="sidebar-tooltip">Videollamadas</span>
+            </a>
+
+            <div id="adminSection" style="display: none;">
+                <a href="#" class="nav-item">
+                    <svg class="nav-icon w-5 h-5" fill="none" stroke="#9FD68C" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                    </svg>
+                    <span class="sidebar-tooltip">Reportes</span>
+                </a>
+            </div>
+
+            <a href="#" class="nav-item">
+                <svg class="nav-icon w-5 h-5" fill="none" stroke="#B0A0DC" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+                <span class="sidebar-tooltip">Configuración</span>
+            </a>
+        </nav>
+
+        <!-- User Profile -->
+        <div class="user-profile">
+            <div class="avatar" id="userAvatar">MG</div>
+            <button onclick="logout()" class="logout-btn" title="Cerrar Sesión">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header: franja azul superior -->
+        <div class="top-banner mb-8">
+            <div class="top-banner-inner">
+                <div>
+                    <h1 class="banner-title" id="dashboardTitle">Bienvenido Malcolm</h1>
+                </div>
+                <div class="text-right">
+                    <p class="banner-date" id="currentDate">Hoy</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- VISTA ESTUDIANTE -->
+        <div id="studentView">
+
+
+            <!-- Active Courses Section -->
+            <div class="mb-8">
+                <h2 class="section-title">Tus Cursos</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="coursesContainer">
+                </div>
+            </div>
+
+                        <!-- Progreso y Módulo Recomendado -->
+            <div class="mb-8">
+                <h2 class="section-title">Módulo Recomendado</h2>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Módulo Recomendado -->
+                    <div class="card">
+                        <div class="flex items-start gap-4">
+                            <div class="w-32 h-24 bg-gradient-to-br from-purple-200 to-purple-400 rounded-lg flex-shrink-0"></div>
+                            <div class="flex-1">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h3 class="text-lg font-bold text-[#1A3B5C]" id="recommendedModule">Crea tu propio abono</h3>
+                                    <span class="badge badge-accent">Próximo</span>
+                                </div>
+                                <p class="text-sm text-gray-600 mb-3">Huertas Orgánicas en la Ciudad - Módulo 4</p>
+                                <p class="text-sm text-gray-600 mb-4">Aprende a crear tu propio abono casero de manera fácil y efectiva con materiales que tienes en tu hogar.</p>
+                                <button class="btn-primary text-sm">Empezar Ahora</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tu Progreso General -->
+                    <div class="card flex items-center justify-between gap-4">
+                        <div>
+                            <h2 class="text-xl font-bold text-[#1A3B5C] mb-2">Tu Progreso General</h2>
+                            <p class="text-gray-600 text-sm">Estás en buen camino. Sigue así!</p>
+                        </div>
+                        <div class="relative w-32 h-32 flex-shrink-0">
+                            <svg class="w-full h-full" viewBox="0 0 120 120">
+                                <circle cx="60" cy="60" r="50" fill="none" stroke="#E2E8F0" stroke-width="8"></circle>
+                                <circle id="progressCircle" class="progress-ring-circle" cx="60" cy="60" r="50" fill="none" stroke="#822375" stroke-width="8" stroke-dasharray="314" stroke-dashoffset="172.7" stroke-linecap="round"></circle>
+                                <text x="60" y="65" text-anchor="middle" font-size="24" font-weight="bold" fill="#1A3B5C" id="progressText">45%</text>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="mb-8">
+                <h2 class="section-title">Actividad Reciente</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="card flex items-start gap-4">
+                        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-semibold text-[#1A3B5C]">Módulos Completados</h4>
+                            <p class="text-sm text-gray-600">Completaste 2 módulos hoy</p>
+                            <p class="text-xs text-gray-500 mt-1">Hace 3 horas</p>
+                        </div>
+                    </div>
+
+                    <div class="card flex items-start gap-4">
+                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path>
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-semibold text-[#1A3B5C]">Mensajes del Foro</h4>
+                            <p class="text-sm text-gray-600">Tienes 3 mensajes nuevos sin leer</p>
+                            <p class="text-xs text-gray-500 mt-1">Hace 2 horas</p>
+                        </div>
+                    </div>
+
+                    <div class="card flex items-start gap-4">
+                        <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-semibold text-[#1A3B5C]">Calificaciones Publicadas</h4>
+                            <p class="text-sm text-gray-600">Recibiste 1 calificación nueva: 9.5/10</p>
+                            <p class="text-xs text-gray-500 mt-1">Hace 1 hora</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upcoming Event -->
+            <div class="mb-8">
+                <h2 class="section-title">Próximo Evento</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="card bg-gradient-to-br from-[#FFB74D] to-[#FF8A50] text-white">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <h3 class="text-lg font-bold mb-2">Videollamada en Vivo</h3>
+                                <p class="text-white/80 mb-4">Sesión de preguntas y respuestas con Carlos Pérez</p>
+                                <div class="flex items-center gap-4 text-sm">
+                                    <div class="flex items-center gap-2">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                        </svg>
+                                        <span>Mañana</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 2m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                        <span>10:00 AM</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn-primary">Unirse</button>
+                            <img src="/LOGO%20desarrollos%20aleshera.png" alt="Desarrollos Aleshera" class="h-12 w-auto rounded-xl opacity-95 mt-[76px]" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VISTA INSTRUCTOR -->
+        <div id="instructorView" style="display: none;">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="card text-center">
+                    <div class="text-4xl font-bold text-[#822375] mb-2">5</div>
+                    <p class="text-gray-600">Cursos Activos</p>
+                </div>
+                <div class="card text-center">
+                    <div class="text-4xl font-bold text-[#1A3B5C] mb-2">127</div>
+                    <p class="text-gray-600">Estudiantes Totales</p>
+                </div>
+                <div class="card text-center">
+                    <div class="text-4xl font-bold text-[#FFB74D] mb-2">73%</div>
+                    <p class="text-gray-600">Progreso Promedio</p>
+                </div>
+            </div>
+            <h2 class="section-title">Entregas Pendientes</h2>
+            <p class="text-center text-gray-500">Vista de instructor</p>
+        </div>
+
+        <!-- VISTA ADMINISTRADOR -->
+        <div id="adminView" style="display: none;">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="card">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600 text-sm mb-1">Total de Usuarios</p>
+                            <p class="text-3xl font-bold text-[#1A3B5C]">1,250</p>
+                        </div>
+                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292 4 4 0 010-5.292zM15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600 text-sm mb-1">Total de Cursos</p>
+                            <p class="text-3xl font-bold text-[#1A3B5C]">47</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600 text-sm mb-1">Módulos Completados</p>
+                            <p class="text-3xl font-bold text-[#1A3B5C]">342</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600 text-sm mb-1">Hoy</p>
+                            <p class="text-3xl font-bold text-[#1A3B5C]">28</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h2 class="section-title">Vista Administrativa</h2>
+            <p class="text-center text-gray-500">Dashboards y reportes administrativos</p>
+
+            <!-- Propuestas de Cursos de Instructores -->
+            <div class="mb-8 mt-10">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                    </div>
+                    <h2 class="section-title mb-0">Propuestas de Cursos de los Instructores</h2>
+                </div>
+                <div id="proposalsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                </div>
+                <p id="proposalsEmpty" class="text-center text-gray-500 mt-6">Aún no hay propuestas enviadas por los instructores.</p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Obtener datos del usuario desde localStorage
+        const storedName = localStorage.getItem('userName');
+        const storedRole = localStorage.getItem('userRole');
+
+        // MOCK DATA
+        window.DATA = {
+            student: {
+                name: storedName || "Malcolm García",
+                role: "ESTUDIANTE",
+                globalProgress: 45,
+                courses: [
+                    {
+                        id: 1,
+                        title: "Introducción a la lectura del Arhuaco",
+                        area: "Idiomas ( EN CONSTRUCCION )",
+                        progress: 75,
+                        image: "/plaindaber-prototipo1/Arhuacolandia.jpg",
+                        lastModule: "Módulo 3: Pronunciación Avanzada",
+                        pageAvailable: false
+                    },
+                    {
+                        id: 2,
+                        title: "Bienes raíces y proyectos inmobiliarios",
+                        area: "Administración ( EN CONSTRUCTRUCION )",
+                        progress: 45,
+                        image: "/plaindaber-prototipo1/inmobiliaria.jpg",
+                        lastModule: "Módulo 2: Análisis de Mercado",
+                        pageAvailable: false
+                    },
+                    {
+                        id: 3,
+                        title: "Huertas orgánicas en la ciudad",
+                        area: "Ecologia",
+                        progress: 20,
+                        image: "/plaindaber-prototipo1/Huerta%20Urbana.png",
+                        lastModule: "Módulo 1: Fundamentos",
+                        pageAvailable: true
+                    }
+                ]
+            },
+            instructor: {
+                name: storedName || "Dr. Carlos Pérez",
+                role: "INSTRUCTOR"
+            },
+            admin: {
+                name: storedName || "Admin Usuario",
+                role: "ADMINISTRADOR"
+            }
+        };
+
+        // Seleccionar usuario según rol guardado
+        if (storedRole === 'INSTRUCTOR') {
+            window.currentUser = window.DATA.instructor;
+        } else if (storedRole === 'ADMINISTRADOR') {
+            window.currentUser = window.DATA.admin;
+        } else {
+            window.currentUser = window.DATA.student;
+        }
+
+        function initDashboard() {
+            const user = window.currentUser;
+            
+            document.getElementById('dashboardTitle').textContent = `Bienvenido, ${user.name.split(' ')[0]}`;
+            document.getElementById('userAvatar').textContent = user.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase();
+
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const today = new Date().toLocaleDateString('es-ES', options);
+            document.getElementById('currentDate').textContent = today;
+
+            if (user.role === 'ESTUDIANTE') {
+                document.getElementById('studentView').style.display = 'block';
+                document.getElementById('instructorView').style.display = 'none';
+                document.getElementById('adminView').style.display = 'none';
+                renderStudentDashboard(user);
+            } else if (user.role === 'INSTRUCTOR') {
+                window.location.href = './dashboard_instructor.html';
+            } else if (user.role === 'ADMINISTRADOR') {
+                document.getElementById('studentView').style.display = 'none';
+                document.getElementById('instructorView').style.display = 'none';
+                document.getElementById('adminView').style.display = 'block';
+                renderProposals();
+            }
+        }
+
+        function renderProposals() {
+            const container = document.getElementById('proposalsContainer');
+            const empty = document.getElementById('proposalsEmpty');
+            const ideas = JSON.parse(localStorage.getItem('courseIdeas') || '[]');
+
+            if (!ideas.length) {
+                container.innerHTML = '';
+                empty.style.display = 'block';
+                return;
+            }
+
+            empty.style.display = 'none';
+            container.innerHTML = ideas.map(idea => `
+                <div class="card">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="badge badge-primary text-xs">${idea.category}</span>
+                        <span class="text-xs text-gray-500">${new Date(idea.createdAt).toLocaleDateString('es-ES')}</span>
+                    </div>
+                    <h3 class="font-bold text-[#1A3B5C] mb-2">${idea.title}</h3>
+                    <p class="text-sm text-gray-600 mb-4 line-clamp-3">${idea.desc}</p>
+                    <p class="text-xs text-gray-500">Contacto: ${idea.contact}</p>
+                    <p class="text-xs text-gray-500 mt-1">Teléfono: ${idea.phone || 'No registrado'}</p>
+                    <p class="text-xs text-gray-500 mt-1">Instructor: ${idea.instructorName || 'Instructor'}</p>
+                </div>
+            `).join('');
+        }
+
+        function renderStudentDashboard(user) {
+            if (typeof window.initProgressRing === 'function') {
+                window.initProgressRing(user.globalProgress);
+            }
+
+            const container = document.getElementById('coursesContainer');
+            container.innerHTML = user.courses.map(course => `
+                <div class="card overflow-hidden">
+                    ${course.image
+                        ? `<img src="${course.image}" alt="${course.title}" class="h-40 w-full object-cover rounded-lg mb-4" />`
+                        : `<div class="h-40 bg-gradient-to-br ${course.color} rounded-lg mb-4"></div>`
+                    }
+                    <h3 class="font-bold text-[#1A3B5C] mb-2 line-clamp-2">${course.title}</h3>
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="badge badge-primary text-xs">${course.area}</span>
+                        <span class="text-sm font-semibold text-[#822375]">${course.progress}%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2 mb-4">
+                        <div class="bg-[#822375] h-2 rounded-full transition-all duration-500" style="width: ${course.progress}%"></div>
+                    </div>
+                    <button ${course.pageAvailable
+                        ? `class="btn-primary inline-block" style="width:auto; padding-left:22.7px; padding-right:22.7px;" onclick="continueCourse('${course.title}', '${course.lastModule}')"`
+                        : `class="btn-primary inline-block opacity-50 cursor-not-allowed" style="width:auto; padding-left:22.7px; padding-right:22.7px;" disabled title="Próximamente"`}>Continuar</button>
+                </div>
+            `).join('');
+        }
+
+        function continueCourse(courseTitle, lastModule) {
+            window.location.href = 'curso_huerta.html';
+        }
+
+        function logout() {
+            if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                window.location.href = './login.html';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', initDashboard);
+    </script>
+</body>
 </html>
+

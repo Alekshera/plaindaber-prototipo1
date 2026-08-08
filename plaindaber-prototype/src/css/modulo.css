@@ -1,0 +1,451 @@
+/* ============================================================
+   PLAINDABER - Módulo (modulo.css)
+   Estilos de la página de detalle de un módulo.
+   Complementan a dashboard.css (sidebar, cards, top-banner).
+   ============================================================ */
+
+/* Tipografía base */
+.text-body { font-family: 'Inter', sans-serif; }
+
+/* ---------- Contenedor principal ---------- */
+.contenedor-principal {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* Enlace "volver al curso" */
+.back-link {
+    color: #4ECDC4;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.back-link:hover { color: #FFD166; }
+
+/* ---------- Cabecera del módulo ---------- */
+.modulo-cabecera {
+    background: linear-gradient(135deg, #1A3B5C 0%, #2D5A7B 100%);
+    color: #EDE9E1;
+    border-radius: 1.5rem;
+    padding: 1.75rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 10px 24px rgba(26, 59, 92, 0.25);
+}
+
+.modulo-cabecera .modulo-badge {
+    display: inline-block;
+    background: #FFD166;
+    color: #1A3B5C;
+    font-weight: 700;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 0.2rem 0.7rem;
+    border-radius: 9999px;
+    margin-bottom: 0.6rem;
+}
+
+.modulo-cabecera h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+}
+
+.modulo-cabecera .modulo-desc { color: #D6D0C5; font-size: 0.9rem; }
+
+/* Barra de progreso del módulo */
+.modulo-progreso {
+    margin-top: 1.1rem;
+}
+
+.modulo-progreso .modulo-progreso-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: #D6D0C5;
+    margin-bottom: 0.35rem;
+}
+
+.modulo-progreso .barra-fondo {
+    height: 8px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 9999px;
+    overflow: hidden;
+}
+
+.modulo-progreso .barra-relleno {
+    height: 100%;
+    background: linear-gradient(90deg, #4ECDC4 0%, #FFD166 100%);
+    border-radius: 9999px;
+    transition: width 0.5s ease;
+}
+
+/* ---------- Estados del módulo ---------- */
+.estado-pill {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.estado-COMPLETADO { background: #D1FAE5; color: #047857; }
+.estado-DISPONIBLE { background: #DBEAFE; color: #1D4ED8; }
+.estado-BLOQUEADO  { background: #F3F4F6; color: #6B7280; }
+
+/* ---------- Bloques de contenido ---------- */
+.bloque-contenido {
+    background: #fff;
+    border: 1px solid #E8ECF1;
+    border-radius: 1rem;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.25rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.bloque-contenido .bloque-titulo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    color: #1A3B5C;
+    margin-bottom: 0.9rem;
+}
+
+/* Encabezado compartido de cada bloque con icono */
+.bloque-encabezado {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-weight: 700;
+    border-radius: 0.6rem;
+    padding: 0.25rem 0.7rem;
+    margin-right: 0.5rem;
+    color: #fff;
+}
+
+.bloque-LECTURA            .bloque-encabezado { background: #4ECDC4; }
+.bloque-ACTIVIDAD_INTERACTIVA .bloque-encabezado { background: #FFB74D; color: #1A3B5C; }
+.bloque-INTEGRACION_API    .bloque-encabezado { background: #822375; }
+.bloque-SIMULACION_IA      .bloque-encabezado { background: #C27CD6; }
+.bloque-PROYECTO_PRACTICO  .bloque-encabezado { background: #E8913B; }
+
+/* ---------- Lectura ---------- */
+.bloque-lectura-cuerpo {
+    color: #374151;
+    font-size: 0.92rem;
+    line-height: 1.7;
+    background: #F7F9FC;
+    border-left: 4px solid #4ECDC4;
+    border-radius: 0.6rem;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1rem;
+}
+
+/* ---------- Actividad interactiva (arrastrar) ---------- */
+.actividad-arrastre {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+}
+
+/* ---------- Actividad completar ---------- */
+.completar-frase {
+    background: #F7F9FC;
+    border-left: 4px solid #FFB74D;
+    border-radius: 0.6rem;
+    padding: 1rem 1.25rem;
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+    line-height: 2;
+    color: #1A3B5C;
+}
+
+.completar-input {
+    display: inline-block;
+    width: 9rem;
+    max-width: 90%;
+    padding: 0.2rem 0.5rem;
+    margin: 0 0.25rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #1A3B5C;
+    text-align: center;
+    border: 2px solid #CBD5E1;
+    border-radius: 0.5rem;
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    line-height: 1.5;
+}
+
+.completar-input:focus { border-color: #FFB74D; box-shadow: 0 0 0 3px rgba(255, 183, 77, 0.2); }
+.completar-input.correcto { background: #D1FAE5; border-color: #4ECF50; }
+.completar-input.incorrecto { background: #FEE2E2; border-color: #EF4444; }
+
+/* ---------- Actividad ordenar ---------- */
+.ordenar-lista {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.ordenar-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: #fff;
+    border: 2px solid #E8EDF1;
+    border-radius: 0.6rem;
+    padding: 0.7rem 0.9rem;
+    margin-bottom: 0.6rem;
+    color: #1A3B5C;
+    font-weight: 600;
+    transition: all 0.15s ease;
+}
+
+.ordenar-numero {
+    flex-shrink: 0;
+    width: 1.75rem;
+    height: 1.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #4ECDC4;
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 700;
+    border-radius: 50%;
+}
+
+.ordenar-ctrl {
+    margin-left: auto;
+    display: flex;
+    gap: 0.35rem;
+}
+
+.ordenar-ctrl button {
+    width: 2rem;
+    height: 2rem;
+    border: 1px solid #CBD5E1;
+    background: #F7F9FC;
+    color: #1A3B5C;
+    border-radius: 0.5rem;
+    font-size: 0.95rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.ordenar-ctrl button:hover:not(:disabled) { background: #E8EDF1; }
+.ordenar-ctrl button:disabled { opacity: 0.35; cursor: default; }
+
+.arastre-columna h5 {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: #6B7280;
+    margin-bottom: 0.6rem;
+}
+
+.pieza-drag {
+    background: #fff;
+    border: 2px solid #E8EDF1;
+    border-radius: 0.6rem;
+    padding: 0.6rem 0.9rem;
+    font-weight: 600;
+    color: #1A3B5C;
+    cursor: grab;
+    margin-bottom: 0.6rem;
+    transition: all 0.15s ease;
+    user-select: none;
+}
+
+.pieza-drag:active { cursor: grabbing; }
+.pieza-drag.arrastrando { opacity: 0.4; }
+.pieza-drag.ubicada { background: #D1FAE5; border-color: #4ECDC4; cursor: default; opacity: 0.9; }
+.pieza-drag.error { background: #FEE2E2; border-color: #EF4444; }
+
+.zona-drop {
+    border: 2px dashed #CBD5E1;
+    border-radius: 0.6rem;
+    padding: 0.6rem 0.9rem;
+    min-height: 46px;
+    margin-bottom: 0.6rem;
+    color: #1A3B5C;
+    font-weight: 500;
+    transition: all 0.15s ease;
+}
+
+.zona-drop.activa { background: #F0FDF4; border-color: #4ECDC4; }
+.zona-drop.correcta { background: #D1FAE5; border-color: #4ECF50; }
+.zona-drop.incorrecta { background: #FEE2E2; border-color: #EF4444; }
+
+.actividad-feedback { margin-top: 1rem; }
+
+/* ---------- API ---------- */
+.api-resultado {
+    margin-top: 0.75rem;
+    background: #0F172A;
+    color: #7DD3FC;
+    border-radius: 0.6rem;
+    padding: 0.9rem 1rem;
+    font-family: 'Inter', monospace;
+    font-size: 0.85rem;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+/* ---------- Simulación IA ---------- */
+.chat-ia {
+    background: #F7F9FC;
+    border-radius: 0.75rem;
+    padding: 1rem;
+    max-height: 280px;
+    overflow-y: auto;
+}
+
+.ia-burbuja {
+    margin-bottom: 0.8rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.ia-burbuja.user { align-items: flex-end; }
+
+.ia-burbuja .ia-texto {
+    max-width: 85%;
+    border-radius: 0.8rem;
+    padding: 0.6rem 0.9rem;
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+.ia-burbuja.bot .ia-texto { background: #fff; border: 1px solid #E2E8F0; }
+.ia-burbuja.user .ia-texto { background: #822375; color: #fff; }
+
+.ia-input { display: flex; gap: 0.5rem; margin-top: 0.8rem; }
+
+/* ---------- Proyecto práctico ---------- */
+.proyecto-estado {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+}
+
+.proyecto-pendiente   { background: #FEF3C7; color: #92400E; }
+.proyecto-entregado   { background: #DBEAFE; color: #1D4ED8; }
+.proyecto-calificado  { background: #D1FAE5; color: #047857; }
+
+/* Bootstrap del input de archivo como botón */
+.file-drop {
+    display: block;
+    border: 2px dashed #CBD5E1;
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+    text-align: center;
+    color: #6B7280;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.file-drop input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+
+.file-drop:hover { border-color: #4ECDC4; background: #F0FDF4; }
+
+/* ---------- Barra de navegación ---------- */
+.modulo-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.btn-nav-modulo {
+    background: #F7F9FC;
+    border: 2px solid #E2E8F0;
+    color: #1A3B5C;
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 0.55rem 1.1rem;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.btn-nav-modulo:hover:not(:disabled) { background: #1A3B5C; color: #fff; }
+.btn-nav-modulo:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* ---------- Modal de evaluación ---------- */
+.modulo-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.modulo-modal { width: 100%; max-width: 560px; max-height: 90vh; overflow-y: auto; }
+
+.eval-pregunta {
+    border: 1px solid #E2E8F0;
+    border-radius: 0.75rem;
+    padding: 0.9rem;
+}
+
+.eval-pregunta .eval-enunciado {
+    font-weight: 600;
+    color: #1A3B5C;
+    font-size: 0.9rem;
+    margin-bottom: 0.6rem;
+}
+
+.eval-opcion {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 0.6rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: background 0.15s;
+}
+
+.eval-opcion:hover { background: #F7F9FC; }
+
+/* ---------- Feedback ---------- */
+.feedback-alerta {
+    padding: 0.9rem 1.1rem;
+    border-radius: 0.75rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+.feedback-alerta-succ { background: #D1FAE5; border: 1px solid #4ECF50; color: #047857; }
+.feedback-alerta-error { background: #FEE2E2; border: 1px solid #EF4444; color: #B91C1C; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+    .arrastre-arastre {
+        grid-template-columns: 1fr;
+    }
+    .modulo-cabecera { padding: 1.25rem; }
+    .bloque-contenido { padding: 1rem; }
+}

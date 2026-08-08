@@ -1,0 +1,324 @@
+* {
+    font-family: 'Poppins', sans-serif;
+}
+
+.text-body {
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: #FDFBF7;
+}
+
+.sidebar {
+    background-color: #1A3B5C;
+    width: 80px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    overflow: visible;
+    z-index: 40;
+}
+
+/* Nav items: iconos solo */
+.sidebar .nav-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 0;
+    margin: 0 auto;
+    width: 44px;
+}
+
+.nav-label {
+    display: none;
+}
+
+/* Tooltip que aparece al pasar el cursor */
+.sidebar .nav-item .sidebar-tooltip {
+    position: absolute;
+    left: 52px;
+    top: 50%;
+    transform: translateY(-50%) translateX(-6px);
+    background-color: #FFFFFF;
+    color: #1A3B5C;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.4rem 0.75rem;
+    border-radius: 0.5rem;
+    white-space: nowrap;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    z-index: 60;
+    pointer-events: none;
+    border-left: 3px solid #FFB74D;
+}
+
+.sidebar .nav-item .sidebar-tooltip::before {
+    content: "";
+    position: absolute;
+    left: -5px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 5px solid transparent;
+    border-right-color: #FFFFFF;
+}
+
+.sidebar .nav-item:hover .sidebar-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(-50%) translateX(0);
+}
+
+.sidebar .nav-item:hover {
+    transform: translateX(0);
+}
+
+.sidebar .nav-item.active {
+    border-left: none;
+    border-radius: 0.75rem;
+}
+
+/* Contenedor de logo centrado */
+.sidebar .logo-wrap {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 1.25rem 0 1.25rem 18px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar .logo-wrap img {
+    height: 44px;
+    width: auto;
+    border-radius: 0.5rem;
+}
+
+/* Perfil de usuario: solo avatar y salir */
+.sidebar .user-profile {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0.75rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.sidebar .avatar {
+    width: 38px;
+    height: 38px;
+    background: linear-gradient(135deg, #FFB74D 0%, #FF8A50 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.8rem;
+    color: #1A3B5C;
+    cursor: pointer;
+}
+
+.sidebar .logout-btn {
+    color: white;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    transition: color 0.2s ease;
+}
+
+.sidebar .logout-btn:hover {
+    color: #FFB74D;
+}
+
+.sidebar .sidebar-nav {
+    margin-top: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.main-content {
+    margin-left: 80px;
+    padding: 2rem;
+}
+
+.nav-item {
+    transition: all 0.3s ease;
+}
+
+.nav-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateX(4px);
+}
+
+.nav-item.active {
+    background-color: #822375;
+    border-left: 4px solid #FFB74D;
+}
+
+.card {
+    background: white;
+    border-radius: 1.5rem;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+}
+
+.progress-ring {
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+}
+
+.progress-ring-circle {
+    transition: stroke-dashoffset 0.5s ease;
+}
+
+.badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.badge-primary {
+    background-color: #1A3B5C;
+    color: white;
+}
+
+.badge-secondary {
+    background-color: #822375;
+    color: white;
+}
+
+.badge-accent {
+    background-color: #FFB74D;
+    color: #1A3B5C;
+}
+
+.notification-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 12px;
+    height: 12px;
+    background-color: #EF4444;
+    border-radius: 50%;
+    border: 2px solid #1A3B5C;
+}
+
+.btn-primary {
+    background-color: #822375;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.75rem;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    background-color: #6B1B5F;
+    transform: scale(1.02);
+}
+
+.btn-secondary {
+    background-color: #F7F9FC;
+    color: #1A3B5C;
+    padding: 0.5rem 1rem;
+    border-radius: 0.75rem;
+    border: 2px solid #1A3B5C;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background-color: #1A3B5C;
+    color: white;
+}
+
+.top-banner {
+    background: linear-gradient(135deg, #1A3B5C 0%, #2D5A7B 100%);
+    border-radius: 0;
+    margin: -2rem -2rem 2rem -2rem;
+    height: 84px;
+    padding: 0 2rem 0 3.5rem;
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    box-shadow: 0 4px 14px rgba(26, 59, 92, 0.25);
+}
+
+.top-banner-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.banner-title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: #EDE9E1;
+    line-height: 1.2;
+}
+
+.banner-subtitle {
+    margin-top: 0.25rem;
+    color: #D6D0C5;
+}
+
+.banner-date {
+    font-size: 0.875rem;
+    color: #D6D0C5;
+    text-transform: capitalize;
+}
+
+.section-title {
+    color: #1A3B5C;
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 64px;
+    }
+    
+    .main-content {
+        margin-left: 64px;
+        padding: 1rem;
+    }
+
+    .sidebar .nav-item .sidebar-tooltip {
+        left: 48px;
+    }
+
+    .top-banner {
+        margin: -1rem -1rem 1rem -1rem;
+        height: 84px;
+        padding: 0 1rem 0 1.5rem;
+    }
+}

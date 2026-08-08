@@ -1,12 +1,182 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Videollamada - Plaindaber</title>
-  </head>
-  <body>
-    <h1>Videollamada</h1>
-    <p>Simulación de videollamada.</p>
-  </body>
+    <title>Videollamada - PLAINDABER</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <script type="module" crossorigin src="/plaindaber-prototipo1/assets/videollamada-cvedICCP.js"></script>
+  <link rel="modulepreload" crossorigin href="/plaindaber-prototipo1/assets/modulepreload-polyfill-P2Xu9kJm.js">
+  <link rel="stylesheet" crossorigin href="/plaindaber-prototipo1/assets/videollamada-DO3XtKsh.css">
+  <link rel="stylesheet" crossorigin href="/plaindaber-prototipo1/assets/dashboard-CmqQSik8.css">
+</head>
+<body class="bg-[#FDFBF7] text-body">
+
+    <!-- ============ SIDEBAR ============ -->
+    <div class="sidebar text-white">
+        <!-- Logo -->
+        <div class="logo-wrap">
+            <img src="/plaindaber-prototipo1/logo-plaindaber-nuevo.png" alt="Plaindaber" />
+        </div>
+
+        <!-- Navegación -->
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item">
+                <svg class="nav-icon w-5 h-5" fill="none" stroke="#FFD54F" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 12l2-3m0 0l7-4 7 4M5 9v10a1 1 0 001 1h12a1 1 0 001-1V9m-9 11l4-4m0 0l4 4m-4-4V3"></path>
+                </svg>
+                <span class="sidebar-tooltip">Dashboard</span>
+            </a>
+
+            <a href="cursos.html" class="nav-item">
+                <svg class="nav-icon w-5 h-5" fill="none" stroke="#E8913B" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 6.253v13m0-13C10.5 6.253 2 10.998 2 17.25c0 5.25 3.75 9.15 10 9.15s10-3.9 10-9.15c0-6.252-8.5-10.997-10-10.997z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 12l-3 2-1 3-2-2-3 1" fill="none"></path>
+                </svg>
+                <span class="sidebar-tooltip">Cursos</span>
+            </a>
+
+            <a href="foro.html" class="nav-item">
+                <svg class="nav-icon w-5 h-5" fill="none" stroke="#C27CD6" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path>
+                </svg>
+                <span class="sidebar-tooltip">Foro</span>
+            </a>
+
+            <a href="videollamada.html" class="nav-item active">
+                <svg class="nav-icon w-5 h-5" fill="none" stroke="#7EB0E8" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                </svg>
+                <span class="sidebar-tooltip">Videollamadas</span>
+            </a>
+
+            <a href="#" class="nav-item">
+                <svg class="nav-icon w-5 h-5" fill="none" stroke="#B0A0DC" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+                <span class="sidebar-tooltip">Configuración</span>
+            </a>
+        </nav>
+
+        <!-- Perfil de usuario -->
+        <div class="user-profile">
+            <div class="avatar" id="userAvatar">MG</div>
+            <button onclick="logout()" class="logout-btn" title="Cerrar Sesión">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- ============ CONTENIDO PRINCIPAL ============ -->
+    <main class="main-content">
+        <!-- Encabezado azul superior -->
+        <div class="top-banner mb-8">
+            <div class="top-banner-inner w-full">
+                <div>
+                    <h1 class="banner-title" id="pageTitle">Videollamada</h1>
+                    <p class="banner-subtitle" id="pageSubtitle">Huertas Orgánicas en la Ciudad · Sesión de preguntas y respuestas</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============ VISTA: ESPERANDO LLAMADA ============ -->
+        <div id="vistaEspera">
+            <!-- Tarjeta de información de la llamada -->
+            <div class="card mb-8 max-w-2xl">
+                <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
+                    <div>
+                        <h2 class="text-xl font-bold text-[#1A3B5C]">Sesión de preguntas y respuestas</h2>
+                        <p class="text-sm text-gray-600 mt-1">Curso: Huertas Orgánicas en la Ciudad</p>
+                    </div>
+                    <span id="estadoLlamadaBadge" class="badge badge-accent">Programada</span>
+                </div>
+                <div class="flex flex-wrap gap-5 text-sm text-gray-600 mb-6">
+                    <div class="flex items-center gap-2">
+                        <svg class="w-5 h-5 text-[#1A3B5C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                        <span>Hoy · 10:00 AM</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <svg class="w-5 h-5 text-[#1A3B5C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292 4 4 0 010-5.292zM15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <span id="participantesEspera">4 participantes en línea</span>
+                    </div>
+                </div>
+                <!-- Botón según rol -->
+                <div id="zonaBotonInicio"></div>
+            </div>
+
+            <!-- Lista de participantes actuales -->
+            <h2 class="section-title">Participantes en la sala</h2>
+            <div id="listaEspera" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </div>
+
+        <!-- ============ VISTA: SALA DE VIDELLAMADA ============ -->
+        <div id="vistaLlamada" class="hidden">
+
+            <!-- Cabecera de la llamada en curso -->
+            <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+                <div class="flex items-center gap-3">
+                    <span class="badge badge-primary">En curso</span>
+                    <span class="text-sm text-gray-300 font-semibold" id="lblTiempo">00:00:00</span>
+                </div>
+                <div class="flex items-center gap-2 text-sm text-gray-400" id="contadorParticipantes"></div>
+            </div>
+
+            <!-- Grid dinámico de participantes -->
+            <div id="gridParticipantes" class="grid-camara"></div>
+
+            <!-- Barra de controles (glassmorphism, fija abajo) -->
+            <div class="controles-barra">
+                <div class="flex items-center justify-center gap-4 flex-wrap">
+                    <button id="btnMicrofono" class="btn-control" title="Activar/desactivar micrófono"></button>
+                    <button id="btnCamara" class="btn-control" title="Activar/desactivar cámara"></button>
+                    <button id="btnPantalla" class="btn-control" title="Compartir pantalla"></button>
+                    <button id="btnChat" class="btn-control" title="Abrir chat"></button>
+                    <button id="btnColgar" class="btn-control btn-control-danger" title="Salir / Terminar llamada"></button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ============ OVERLAY: CONECTANDO ============ -->
+    <div id="overlayConectando" class="overlay-call hidden">
+        <div class="card text-center p-10">
+            <div class="spinner-conectando mb-4"></div>
+            <h3 class="text-xl font-bold text-[#1A3B5C] mb-1">Conectando...</h3>
+            <p class="text-sm text-gray-500">Estableciendo conexión segura con la sala.</p>
+        </div>
+    </div>
+
+    <!-- ============ MODAL: CHAT ============ -->
+    <div id="modalChat" class="overlay-call hidden">
+        <div class="chat-panel card">
+            <div class="flex items-center justify-between mb-4 pb-3 border-b border-gray-100">
+                <h3 class="text-lg font-bold text-[#1A3B5C]">Chat de la llamada</h3>
+                <button id="btnCerrarChat" class="text-gray-400 hover:text-[#822375] text-2xl leading-none">&times;</button>
+            </div>
+            <div id="chatMensajes" class="chat-mensajes mb-4"></div>
+            <form id="formChat" class="flex gap-2">
+                <input type="text" id="chatInput" placeholder="Escribe un mensaje..." autocomplete="off"
+                    class="flex-1 rounded-xl border-2 border-gray-200 px-4 py-2 text-sm focus:border-[#822375] focus:outline-none" />
+                <button type="submit" class="btn-primary">Enviar</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // logout global (mismo patrón que el resto de páginas)
+        window.logout = function () {
+            if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                window.location.href = './login.html';
+            }
+        };
+    </script>
+</body>
 </html>

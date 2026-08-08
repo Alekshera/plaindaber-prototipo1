@@ -1,4 +1,12 @@
 {
+  "name": "plaindaber-manual-root",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix plaindaber-prototype run dev -- --host",
+    "build": "npm --prefix plaindaber-prototype run build",
+    "preview": "npm --prefix plaindaber-prototype run preview -- --host",
+    "deploy": "npm --prefix plaindaber-prototype run deploy"
+  },
   "devDependencies": {
     "gh-pages": "^6.3.0"
   }

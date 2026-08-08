@@ -1,0 +1,359 @@
+/* ============================================================
+   PLAINDABER - Videollamada
+   Estilos de la sala de videollamada (complementan a dashboard.css).
+   ============================================================ */
+
+/* ---------- Fondo oscuro de la sala ---------- */
+main.main-content {
+    background-color: #0A0A0A;
+    color: #EDE9E1;
+}
+
+/* El banner azul superior se mantiene aunque el fondo sea oscuro */
+.main-content .top-banner {
+    background: linear-gradient(135deg, #1A3B5C 0%, #2D5A7B 100%);
+}
+
+/* Títulos de sección legibles sobre el fondo oscuro de la sala */
+main.main-content .section-title {
+    color: #EDE9E1;
+}
+
+/* Textos genéricos dentro del área oscura (fuera de tarjetas) */
+main.main-content .banner-subtitle {
+    color: #D6D0C5;
+}
+
+/* ---------- Grid dinámico de participantes ---------- */
+.grid-camara {
+    display: grid;
+    gap: 1rem;
+    width: 100%;
+    margin-bottom: 6rem;
+}
+
+/* Casos: 1, 2, 3-4, 5-6, más de 6 (scroll vertical) */
+.sala-1 { grid-template-columns: 1fr; align-items: start; justify-items: center; }
+.sala-2 { grid-template-columns: repeat(2, 1fr); }
+.sala-3, .sala-4 { grid-template-columns: repeat(2, 1fr); }
+.sala-5, .sala-6 { grid-template-columns: repeat(3, 1fr); }
+.sala-many {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+/* ---------- Tarjeta de cada participante ---------- */
+.participante {
+    position: relative;
+    background-color: #1A1A2E;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    aspect-ratio: 16 / 10;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.participante:hover {
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.7);
+    transform: translateY(-2px);
+}
+
+.participante-grande {
+    aspect-ratio: 16 / 9;
+}
+
+.sala-1 .participante { width: 100%; max-width: 900px; }
+
+/* "Imagen de video" simulada con gradiente */
+.participante-video {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #2D5A7B 0%, #822375 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Video real del usuario local (WebRTC getUserMedia) */
+.participante video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background: #000;
+    border-radius: 12px;
+    transform: scaleX(-1); /* efecto espejo para la cámara local */
+}
+
+/* Avatar cuando la cámara está apagada */
+.participante-avatar {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #1A3B5C 0%, #3A3A6E 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.participante-avatar .avatar-texto {
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #FFB74D 0%, #FF8A50 100%);
+    color: #1A3B5C;
+    font-size: 2rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Nombres + etiqueta TÚ */
+.participante-info {
+    position: absolute;
+    left: 0.6rem;
+    bottom: 0.6rem;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(4px);
+    padding: 0.3rem 0.7rem;
+    border-radius: 0.6rem;
+    font-size: 0.8rem;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+.participante-nombre {
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.etiqueta-tu {
+    background-color: #22C55E;
+    color: #0A0A0A;
+    font-size: 0.6rem;
+    font-weight: 800;
+    padding: 0.05rem 0.4rem;
+    border-radius: 0.4rem;
+}
+
+/* Badges de estado (muteado / sin cámara) en la esquina */
+.participante-estado {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.6rem;
+    display: flex;
+    gap: 0.4rem;
+}
+
+.estado-chip {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+}
+
+.estado-chip.activo-verde { background: rgba(34, 197, 94, 0.5); }
+
+/* Badge de rol bajo el nombre */
+.rol-chip {
+    font-size: 0.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    padding: 0.05rem 0.4rem;
+    border-radius: 9999px;
+}
+
+.rol-estudiante { background: #DBEAFE; color: #1D4ED8; }
+.rol-instructor { background: #D1FAE5; color: #047857; }
+.rol-admin      { background: #FEE2E2; color: #B91C1C; }
+
+/* ---------- Barra de controles (glassmorphism) ---------- */
+.controles-barra {
+    position: fixed;
+    left: 50%;
+    bottom: 1.25rem;
+    transform: translateX(-50%);
+    z-index: 40;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 9999px;
+    padding: 0.6rem 1rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.btn-control {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-control:hover {
+    background: rgba(255, 255, 255, 0.22);
+    transform: scale(1.05);
+}
+
+.btn-control.desactivado {
+    background: #EF4444;
+    border-color: #EF4444;
+}
+
+.btn-control-desactivado svg .no-linea { display: block; }
+.btn-control svg .no-linea { display: none; }
+
+.btn-control-danger {
+    background: #EF4444;
+    border-color: #EF4444;
+}
+
+.btn-control-danger:hover {
+    background: #DC2626;
+}
+
+/* ---------- Overlays (conectando / chat) ---------- */
+.overlay-call {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    animation: callFadeIn 0.2s ease;
+}
+
+@keyframes callFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Spinner de conexión */
+.spinner-conectando {
+    width: 56px;
+    height: 56px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 5px solid #E2E8F0;
+    border-top-color: #822375;
+    border-radius: 50%;
+    animation: girar 0.9s linear infinite;
+}
+
+@keyframes girar {
+    to { transform: rotate(360deg); }
+}
+
+/* ---------- Panel de chat ---------- */
+.chat-panel {
+    width: 100%;
+    max-width: 420px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+}
+
+.chat-mensajes {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 0.25rem;
+    min-height: 260px;
+    max-height: 50vh;
+}
+
+/* Burbujas alineadas a la izquierda */
+.chat-burbuja {
+    max-width: 85%;
+    background-color: #F7F9FC;
+    border: 1px solid #E2E8F0;
+    border-radius: 1rem 1rem 1rem 0.25rem;
+    padding: 0.6rem 0.85rem;
+}
+
+.chat-burbuja.propio {
+    align-self: flex-end;
+    background-color: #822375;
+    border-color: #822375;
+    color: #fff;
+    border-radius: 1rem 1rem 0.25rem 1rem;
+}
+
+.chat-burbuja .chat-autor {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #822375;
+    margin-bottom: 0.1rem;
+}
+
+.chat-burbuja.propio .chat-autor { color: #FFD166; }
+
+.chat-burbuja .chat-texto {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    word-break: break-word;
+}
+
+.chat-burbuja .chat-hora {
+    display: block;
+    margin-top: 0.2rem;
+    font-size: 0.65rem;
+    opacity: 0.7;
+}
+
+/* ---------- Scrollbar personalizada ---------- */
+.chat-mensajes::-webkit-scrollbar,
+.sala-many::-webkit-scrollbar,
+.menciones-dropdown::-webkit-scrollbar {
+    width: 8px;
+}
+
+.chat-mensajes::-webkit-scrollbar-thumb,
+.sala-many::-webkit-scrollbar-thumb {
+    background: #822375;
+    border-radius: 8px;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+    .grid-camara {
+        grid-template-columns: 1fr !important;
+    }
+
+    .sala-1 .participante { max-width: 100%; }
+
+    .btn-control {
+        width: 46px;
+        height: 46px;
+    }
+
+    .controles-barra {
+        width: 94%;
+        bottom: 0.75rem;
+        border-radius: 1.5rem;
+    }
+}
