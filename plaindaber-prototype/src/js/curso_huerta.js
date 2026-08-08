@@ -448,3 +448,12 @@ window.logout = function () {
         window.location.href = './login.html';
     }
 };
+
+/* Exponer funciones usadas por los onclick inline (scope de módulo) */
+window.seleccionarModulo = seleccionarModulo;
+window.completarModulo = completarModulo;
+window.navegar = navegar;
+window.iniciarActividad = iniciarActividad;
+window.generarCasoIA = generarCasoIA;
+window.entregarProyecto = entregarProyecto;
+window.seleccionarPrimerDisponible = seleccionarPrimerDisponible;
