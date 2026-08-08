@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mapa de Navegación — PLAINDABER</title>
+  <style>
+    :root {
+      --navy: #1A3B5C;
+      --navy2: #2D5A7B;
+      --purple: #822375;
+      --purple2: #6B1B5F;
+      --amber: #FFD166;
+      --amber2: #FFB74D;
+      --orange: #E8913B;
+      --crimson: #C27CD6;
+      --blue: #7EB0E8;
+      --green: #9FD68C;
+      --lavender: #B0A0DC;
+      --cream: #FDFBF7;
+      --slate: #D6D0C5;
+      --red: #EF4444;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: var(--cream);
+      color: #1F2937;
+    }
+
+    /* ===== Encabezado ===== */
+    .banner {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy2) 100%);
+      color: #fff;
+      padding: 28px 32px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      border-bottom: 6px solid var(--amber2);
+    }
+    .banner img { height: 64px; background: #fff; border-radius: 16px; padding: 4px; }
+    .banner h1 { font-size: 26px; letter-spacing: .5px; }
+    .banner p { opacity: .85; font-size: 14px; max-width: 640px; margin-top: 4px; }
+    .btn-back {
+      margin-left: auto;
+      background: #FFD166;
+      color: #1A3B5C;
+      border: none;
+      padding: 12px 22px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      font-size: 15px;
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background .2s ease, transform .15s ease;
+      box-shadow: 0 4px 10px rgba(0,0,0,.18);
+    }
+    .btn-back:hover { background: #FFB74D; transform: translateY(-2px); }
+
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 32px 24px 64px; }
+
+    /* Tarjetas de introducción */
+    .intro {
+      background: var(--amber2);
+      color: var(--navy);
+      border-radius: 18px;
+      padding: 20px 24px;
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 28px;
+      box-shadow: 0 6px 16px rgba(26, 59, 92, .15);
+    }
+    .intro strong { text-transform: uppercase; letter-spacing: .2em; font-size: 12px; }
+
+    /* Leyenda */
+    .legend { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 30px; }
+    .chip {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 14px; border-radius: 999px;
+      font-size: 13px; font-weight: 600; border: 2px solid #fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,.12);
+    }
+    .chip .dot { width: 13px; height: 13px; border-radius: 50%; display: inline-block; }
+
+    /* ===== Árbol jerárquico ===== */
+    .tree { list-style: none; }
+    .tree, .tree ul { padding: 0; margin: 0; }
+    .tree ul { margin-left: 28px; position: relative; padding-left: 22px; }
+    .tree li { position: relative; list-style: none; }
+    .tree ul::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+      border-left: 2px dashed rgba(26, 59, 92, .55);
+    }
+    .tree ul li::before {
+      content: ''; position: absolute; left: -22px; top: 50%;
+      width: 22px; height: 2px; background: rgba(26, 59, 92, .55);
+    }
+    .node { margin: 8px 0; }
+
+    .card {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: #fff; border: 3px solid var(--navy);
+      border-radius: 14px; padding: 10px 18px; width: fit-content;
+      box-shadow: 0 4px 10px rgba(26, 59, 92, .12);
+      transition: transform .15s ease, box-shadow .15s ease;
+      cursor: default;
+    }
+    .card:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(26, 59, 92, .22); }
+
+    .card .ic { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; color: #fff; font-weight: 800; font-size: 14px; }
+    .card .tt { font-weight: 700; color: var(--navy); font-size: 15px; line-height: 1.2; }
+    .card .tt small { display: block; font-weight: 500; color: #6B7280; font-size: 12px; }
+    .tag {
+      font-size: 11px; font-weight: 700; letter-spacing: .04em;
+      padding: 3px 10px; border-radius: 999px; color: #fff; text-transform: uppercase;
+    }
+    .badge { font-size: 12px; font-weight: 700; border-radius: 999px; padding: 2px 10px; }
+
+    /* Variantes de color de nodos */
+    .c-navy   { border-color: var(--navy); }
+    .c-navy .ic, .c-navy .tag { background: var(--navy); }
+    .c-purple { border-color: var(--purple); }
+    .c-purple .ic, .c-purple .tag { background: var(--purple); }
+    .c-amber  { border-color: var(--amber2); }
+    .c-amber .ic, .c-amber .tag { background: var(--amber2); color: var(--navy); }
+    .c-amber .ic { color: var(--navy); }
+    .c-orange { border-color: var(--orange); }
+    .c-orange .ic, .c-orange .tag { background: var(--orange); }
+    .c-blue   { border-color: var(--blue); }
+    .c-blue .ic, .c-blue .tag { background: var(--blue); color: var(--navy); }
+    .c-blue .tt { color: var(--navy); }
+    .c-crimson{ border-color: var(--crimson); }
+    .c-crimson .ic, .c-crimson .tag { background: var(--crimson); }
+    .c-green  { border-color: var(--green, #8AD68C); }
+    .c-green .ic, .c-green .tag { background: #8AD68C; color: var(--navy); }
+    .c-lav    { border-color: var(--lavender); }
+    .c-lav .ic, .c-lav .tag { background: var(--lavender); color: var(--navy); }
+    .c-red    { border-color: var(--red); }
+    .c-red .ic, .c-red .tag { background: var(--red); }
+    .c-cont { border-style: dashed; }
+
+    .group-label {
+      font-size: 12px; font-weight: 800; text-transform: uppercase;
+      letter-spacing: .14em; color: var(--purple); margin: 18px 0 6px;
+    }
+    .note {
+      background: #fff; border-left: 4px solid var(--amber2);
+      padding: 10px 16px; border-radius: 10px; margin: 14px 0;
+      font-size: 14px; color: #374151;
+    }
+
+    /* Tabla resumen */
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin-top: 18px; }
+    .tile { background: #fff; border-radius: 16px; padding: 20px; box-shadow: 0 4px 12px rgba(26,59,92,.1); border-top: 5px solid var(--purple); }
+    .tile.dos { border-top-color: var(--navy); }
+    .tile.tres { border-top-color: var(--orange); }
+    .tile h3 { color: var(--navy); font-size: 17px; margin-bottom: 10px; }
+    .tile ul { list-style: none; }
+    .tile li { padding: 5px 0 5px 20px; position: relative; font-size: 14px; }
+    .tile li::before { content: ''; position: absolute; left: 0; top: 12px; width: 9px; height: 9px; border-radius: 50%; background: var(--purple); }
+    .tile.dos li::before { background: var(--navy); }
+    .tile.tres li::before { background: var(--orange); }
+    .tile .count { font-weight: 800; color: var(--purple); font-size: 20px; }
+    .tile.dos .count { color: var(--navy); }
+    .tile.tres .count { color: var(--orange); }
+
+    footer {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy2) 100%);
+      color: #fff; padding: 24px 32px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+    }
+    footer img { height: 44px; background: #fff; border-radius: 14px; padding: 4px; }
+    footer .f { font-size: 13px; opacity: .9; }
+  </style>
+</head>
+<body>
+
+  <header class="banner">
+    <img src="/logo-plaindaber-nuevo.png" alt="Plaindaber" />
+    <div>
+      <h1>Mapa de Navegación — Plaindaber</h1>
+      <p>Árbol jerárquico de la arquitectura del sitio: recorrido del visitante, distribución y jerarquía del contenido.</p>
+    </div>
+    <a href="#" id="btnRegresar" class="btn-back">← Regresar</a>
+  </header>
+
+  <div class="wrap">
+
+    <div class="intro">
+      <strong>¿Cómo leer el mapa?</strong><br />
+      Este árbol jerárquico muestra el recorrido del visitante dentro de la plataforma: desde las páginas de acceso
+      público, pasando por la autenticación según rol, hasta el contenido formativo (cursos, módulos, foro y videollamadas).
+      Cada nodo representa una página y las ramificaciones indican el flujo de navegación posible. El menú lateral
+      (sidebar) es el componente de navegación compartido por todas las páginas autenticadas.
+    </div>
+
+    <!-- Leyenda -->
+    <div class="legend">
+      <span class="chip"><span class="dot" style="background:#1A3B5C"></span> Dashboard / Inicio</span>
+      <span class="chip"><span class="dot" style="background:#FFD166"></span> Acceso y cuentas</span>
+      <span class="chip"><span class="dot" style="background:#E8913B"></span> Cursos / contenido</span>
+      <span class="chip"><span class="dot" style="background:#C27CD6"></span> Foro</span>
+      <span class="chip"><span class="dot" style="background:#7EB0E8"></span> Videollamadas</span>
+      <span class="chip"><span class="dot" style="background:#822375"></span> Rol instructor</span>
+      <span class="chip"><span class="dot" style="background:#8AD68C"></span> Reportes (admin)</span>
+      <span class="chip"><span class="dot" style="background:#EF4444"></span> Cerrar sesión</span>
+    </div>
+
+    <!-- ================= ÁRBOL ================= -->
+    <div class="group-label">Raíz del sitio</div>
+    <ul class="tree">
+      <li>
+        <div class="node">
+          <div class="card c-navy">
+            <span class="ic">R</span>
+            <span class="tt">index.html<small>Ruta raíz del sitio</small></span>
+            <span class="tag">Inicio</span>
+          </div>
+        </div>
+
+        <ul>
+          <li>
+            <div class="node">
+              <div class="card c-amber">
+                <span class="ic">L</span>
+                <span class="tt">login.html<small>Inicio de sesión · acceso libre</small></span>
+                <span class="tag">Pública</span>
+              </div>
+            </div>
+
+            <ul>
+              <li>
+                <div class="node">
+                  <div class="card c-amber">
+                    <span class="ic">R</span>
+                    <span class="tt">registro.html<small>Creación de cuenta (roles)</small></span>
+                    <span class="tag">1</span>
+                  </div>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node">
+                      <div class="card c-purple">
+                        <span class="ic">I</span>
+                        <span class="tt">dashboard_instructor.html<small>Rol: Profesor</small></span>
+                        <span class="tag">Instructor</span>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node">
+                      <div class="card c-navy">
+                        <span class="ic">D</span>
+                        <span class="tt">dashboard.html<small>Rol: Estudiante</small></span>
+                        <span class="tag">2</span>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node">
+                      <div class="card c-navy">
+                        <span class="ic">A</span>
+                        <span class="tt">dashboard.html<small>Rol: Administrador · ver propuestas y reportes</small></span>
+                        <span class="tag">Admin</span>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node">
+                  <div class="card c-amber">
+                    <span class="ic">P</span>
+                    <span class="tt">recuperar_password.html<small>Recuperación de contraseña</small></span>
+                    <span class="tag">Pública</span>
+                  </div>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node">
+                      <div class="card c-amber c-gray">
+                        <span class="ic">→</span>
+                        <span class="tt">login.html<small>Vuelve al inicio de sesión</small></span>
+                        <span class="tag">Retorno</span>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="group-label">Acceso autenticado · redirección por rol</div>
+                <ul>
+                  <li>
+                    <div class="node">
+                      <div class="card c-navy">
+                        <span class="ic">D</span>
+                        <span class="tt">dashboard.html<small>Menú principal · Estudiante</small></span>
+                        <span class="tag">Inicio</span>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node">
+                      <div class="card c-purple">
+                        <span class="ic">I</span>
+                        <span class="tt">dashboard_instructor.html<small>Menú principal · Instructor</small></span>
+                        <span class="tag">Inicio</span>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+
+    <!-- ====== Zona autenticada ====== -->
+    <div class="group-label">Zona autenticada · menú principal (sidebar)</div>
+    <div class="note-wrap">
+      Las siguientes páginas comparten el sidebar de navegación y son accesibles desde
+      <code>dashboard.html</code>, <code>dashboard_instructor.html</code> y entre sí.
+      Representan la jerarquía de segundo nivel del sitio.
+    </div>
+    <ul class="tree">
+      <li>
+        <div class="node">
+          <div class="card c-navy">
+            <span class="ic">D</span>
+            <span class="tt">dashboard.html<small>Inicio del estudiante (resumen, progreso, eventos)</small></span>
+            <span class="tag">Principal</span>
+          </div>
+        </div>
+
+        <ul>
+          <li>
+            <div class="node">
+              <div class="card c-orange">
+                <span class="ic">C</span>
+                <span class="tt">cursos.html<small>Catálogo de cursos por área</small></span>
+                <span class="tag">2</span>
+              </div>
+            </div>
+            <ul>
+              <li>
+                <div class="node">
+                  <div class="card c-orange">
+                    <span class="ic">D</span>
+                    <span class="tt">curso_huerta.html?id=N<small>Detalle del curso seleccionado</small></span>
+                    <span class="tag">3</span>
+                  </div>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node">
+                      <div class="card c-orange">
+                        <span class="ic">M</span>
+                        <span class="tt">modulo.html?id=N<small>Módulo interactivo · lecciones encadenadas</small></span>
+                        <span class="tag">4</span>
+                      </div>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="node">
+                          <div class="card c-orange c-gray">
+                            <span class="ic">→</span>
+                            <span class="tt">modulo.html?id=N+1<small>Siguiente módulo / secuencia</small></span>
+                            <span class="tag">Nivel</span>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node">
+                  <div class="card c-crimson">
+                    <span class="ic">F</span>
+                    <span class="tt">foro.html<small>Discusiones del curso</small></span>
+                    <span class="tag">3</span>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="node">
+                  <div class="card c-blue">
+                    <span class="ic">V</span>
+                    <span class="tt">videollamada.html<small>Sesiones en vivo (Q&A)</small></span>
+                    <span class="tag">3</span>
+                  </div>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node">
+                      <div class="card c-navy c-gray">
+                        <span class="ic">→</span>
+                        <span class="tt">dashboard.html<small>Al terminar la llamada</small></span>
+                        <span class="tag">Retorno</span>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+
+          <li>
+            <div class="node">
+              <div class="card c-purple">
+                <span class="ic">I</span>
+                <span class="tt">dashboard_instructor.html<small>Panel del instructor · entregas y progreso</small></span>
+                <span class="tag">Principal</span>
+              </div>
+            </div>
+            <ul>
+              <li>
+                <div class="node">
+                  <div class="card c-orange">
+                    <span class="ic">C</span>
+                    <span class="tt">cursos.html<small>Catálogo y cursos publicados</small></span>
+                    <span class="tag">2</span>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="node">
+                  <div class="card c-crimson">
+                    <span class="ic">F</span>
+                    <span class="tt">foro.html<small>Foro de discusión</small></span>
+                    <span class="tag">3</span>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="node">
+                  <div class="card c-blue">
+                    <span class="ic">V</span>
+                    <span class="tt">videollamada.html<small>Sesiones en vivo</small></span>
+                    <span class="tag">3</span>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </li>
+
+          <li>
+            <div class="node">
+              <div class="card c-green">
+                <span class="ic">R</span>
+                <span class="tt">dashboard.html<small>Vista Administrador: Reportes y propuestas de cursos</small></span>
+                <span class="tag">Admin</span>
+              </div>
+            </div>
+            <ul>
+              <li>
+                <div class="node">
+                  <div class="card c-green">
+                    <span class="ic">P</span>
+                    <span class="tt">Propuestas de cursos<small>Reportes administrativos</small></span>
+                    <span class="tag">3</span>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </li>
+
+          <li>
+            <div class="node">
+              <div class="card c-red">
+                <span class="ic">⏻</span>
+                <span class="tt">logout → login.html<small>Cerrar sesión desde cualquier página</small></span>
+                <span class="tag">Salida</span>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </li>
+    </ul>
+
+    <!-- ====== Resumen ====== -->
+    <div class="group-label" style="margin-top:40px">Distribución de secciones y número de páginas</div>
+    <div class="grid">
+      <div class="tile">
+        <h3>1 · Acceso y cuentas (público)</h3>
+        <span class="count">4</span> páginas
+        <ul>
+          <li>index.html (redirección inicial)</li>
+          <li>login.html</li>
+          <li>registro.html</li>
+          <li>recuperar_password.html</li>
+        </ul>
+      </div>
+      <div class="tile dos">
+        <h3>2 · Menú principal / autenticado</h3>
+        <span class="count">5</span> páginas
+        <ul>
+          <li>dashboard.html</li>
+          <li>dashboard_instructor.html</li>
+          <li>cursos.html (catálogo)</li>
+          <li>foro.html</li>
+          <li>videollamada.html</li>
+        </ul>
+      </div>
+      <div class="tile tres">
+        <h3>3 · Contenido de cursos</h3>
+        <span class="count">2</span> páginas dinámicas
+        <ul>
+          <li>curso_huerta.html (detalle del curso, ?id=N)</li>
+          <li>modulo.html (módulo interactivo, ?id=N)</li>
+        </ul>
+        <p style="margin-top:10px;font-size:13px;color:#6B7280">Total: <strong>11 páginas funcionales</strong> (curso.html es un placeholder sin enlazar).</p>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="f">Plaindaber — Plataforma Interactiva de diversas áreas del saber</div>
+    <div class="f">Diseñado por:</div>
+    <img src="/LOGO%20desarrollos%20aleshera.png" alt="Desarrollos Aleshera" />
+  </footer>
+
+  <script>
+    document.getElementById('btnRegresar').addEventListener('click', function () {
+      var role = localStorage.getItem('userRole');
+      var target = role === 'INSTRUCTOR'
+        ? 'src/pages/dashboard_instructor.html'
+        : 'src/pages/dashboard.html';
+      window.location.href = target;
+    });
+  </script>
+
+</body>
+</html>

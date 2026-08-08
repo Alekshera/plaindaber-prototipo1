@@ -295,6 +295,26 @@ body {
     text-transform: capitalize;
 }
 
+.btn-map {
+    background-color: #FFD166;
+    color: #1A3B5C;
+    padding: 0.55rem 1.1rem;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-decoration: none;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.btn-map:hover {
+    background-color: #FFB74D;
+    transform: scale(1.02);
+}
+
 .section-title {
     color: #1A3B5C;
     font-weight: 700;
