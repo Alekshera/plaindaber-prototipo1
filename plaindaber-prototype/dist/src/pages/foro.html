@@ -6,20 +6,21 @@
     <title>Foro de Discusión - PLAINDABER</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <script type="module" crossorigin src="/plaindaber-prototipo1/assets/foro-BtLXGD2n.js"></script>
+  <script type="module" crossorigin src="/plaindaber-prototipo1/assets/foro-cxSmnmU-.js"></script>
   <link rel="modulepreload" crossorigin href="/plaindaber-prototipo1/assets/modulepreload-polyfill-P2Xu9kJm.js">
   <link rel="stylesheet" crossorigin href="/plaindaber-prototipo1/assets/foro-q9ZVoNWx.css">
-  <link rel="stylesheet" crossorigin href="/plaindaber-prototipo1/assets/dashboard-CmqQSik8.css">
+  <link rel="stylesheet" crossorigin href="/plaindaber-prototipo1/assets/dashboard-BdMTnUUr.css">
 </head>
 <body class="bg-[#FDFBF7] text-body">
 
     <!-- ============ SIDEBAR ============ -->
     <div class="sidebar text-white">
-        <!-- Logo -->
-        <div class="logo-wrap">
-            <img src="/plaindaber-prototipo1/logo-plaindaber-nuevo.png" alt="Plaindaber" />
-        </div>
-
+        <!-- Botón para ocultar el menú -->
+        <button class="sidebar-toggle" id="sidebarToggle" aria-label="Ocultar menú" title="Ocultar menú">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+        </button>
         <!-- Navegación -->
         <nav class="sidebar-nav">
             <a href="dashboard.html" class="nav-item">
@@ -73,15 +74,27 @@
     </div>
 
     <!-- ============ CONTENIDO PRINCIPAL ============ -->
+    <!-- Overlay del drawer (móvil) -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
     <main class="main-content">
 
         <!-- Encabezado azul superior -->
         <div class="top-banner mb-8">
             <div class="top-banner-inner w-full">
+                <div class="banner-start">
+                    <button class="banner-hamburger" id="hamburgerBtn" aria-label="Mostrar menú" title="Mostrar menú">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                    <img src="/plaindaber-prototipo1/logo-plaindaber-nuevo.png" alt="Plaindaber" class="banner-logo" />
+                </div>
                 <div>
                     <h1 class="banner-title" id="pageTitle">Foro de Discusión</h1>
                     <p class="banner-subtitle" id="pageSubtitle">General · Huertas Orgánicas en la Ciudad</p>
                 </div>
+                <!-- <a href="../../mapa_navegacion.html" class="btn-map">Mapa de Navegación</a> -->
             </div>
         </div>
 
@@ -202,6 +215,72 @@
                 window.location.href = './login.html';
             }
         };
+    </script>
+
+    <script>
+        // Sidebar: drawer en móvil, colapsable en desktop
+        (function () {
+            const sidebar = document.querySelector('.sidebar');
+            if (!sidebar) return;
+
+            const toggleBtn = document.getElementById('sidebarToggle');
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const overlay = document.getElementById('sidebarOverlay');
+            const KEY = 'plaindaber_sidebar_collapsed';
+            const mq = window.matchMedia('(max-width: 768px)');
+
+            const openDrawer = function () {
+                sidebar.classList.add('open');
+                if (overlay) overlay.classList.add('visible');
+            };
+
+            const closeDrawer = function () {
+                sidebar.classList.remove('open');
+                if (overlay) overlay.classList.remove('visible');
+            };
+
+            const setCollapsed = function (collapsed) {
+                sidebar.classList.toggle('collapsed', collapsed);
+                document.body.classList.toggle('sidebar-collapsed', collapsed);
+                if (!mq.matches) localStorage.setItem(KEY, collapsed ? '1' : '0');
+            };
+
+            const updateMode = function () {
+                if (mq.matches) {
+                    closeDrawer();
+                    setCollapsed(true);
+                } else {
+                    closeDrawer();
+                    setCollapsed(localStorage.getItem(KEY) === '1');
+                }
+            };
+
+            if (hamburgerBtn) hamburgerBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                if (mq.matches) {
+                    if (sidebar.classList.contains('open')) closeDrawer();
+                    else openDrawer();
+                } else {
+                    setCollapsed(false);
+                }
+            });
+
+            if (toggleBtn) toggleBtn.addEventListener('click', function () { setCollapsed(true); });
+
+            if (overlay) overlay.addEventListener('click', closeDrawer);
+
+            sidebar.querySelectorAll('.nav-item').forEach(function (link) {
+                link.addEventListener('click', function () {
+                    if (mq.matches) closeDrawer();
+                });
+            });
+
+            if (mq.addEventListener) mq.addEventListener('change', updateMode);
+            else if (mq.addListener) mq.addListener(updateMode);
+
+            updateMode();
+        })();
     </script>
 </body>
 </html>

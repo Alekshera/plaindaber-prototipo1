@@ -12,12 +12,13 @@
 <body class="bg-[#FDFBF7]">
   <!-- Sidebar -->
   <div class="sidebar text-white">
-    <!-- Logo -->
-    <div class="logo-wrap">
-      <img src="/logo-plaindaber-nuevo.png" alt="Plaindaber" />
-    </div>
-
-        <!-- Navigation -->
+    <!-- Botón para ocultar el menú -->
+    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Ocultar menú" title="Ocultar menú">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+      </svg>
+    </button>
+    <!-- Navigation -->
         <nav class="sidebar-nav">
             <a href="#" class="nav-item active">
                 <svg class="nav-icon w-5 h-5" fill="none" stroke="#FFD54F" viewBox="0 0 24 24">
@@ -48,15 +49,6 @@
                 <span class="sidebar-tooltip">Videollamadas</span>
             </a>
 
-            <div id="adminSection" style="display: none;">
-                <a href="#" class="nav-item">
-                    <svg class="nav-icon w-5 h-5" fill="none" stroke="#9FD68C" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                    </svg>
-                    <span class="sidebar-tooltip">Reportes</span>
-                </a>
-            </div>
-
             <a href="#" class="nav-item">
                 <svg class="nav-icon w-5 h-5" fill="none" stroke="#B0A0DC" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
@@ -77,11 +69,22 @@
         </div>
     </div>
 
+    <!-- Overlay del drawer (móvil) -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
     <!-- Main Content -->
     <main class="main-content">
         <!-- Header: franja azul superior -->
         <div class="top-banner mb-8">
             <div class="top-banner-inner">
+                <div class="banner-start">
+                    <button class="banner-hamburger" id="hamburgerBtn" aria-label="Mostrar menú" title="Mostrar menú">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                    <img src="/logo-plaindaber-nuevo.png" alt="Plaindaber" class="banner-logo" />
+                </div>
                 <div>
                     <h1 class="banner-title" id="dashboardTitle">Bienvenido Malcolm</h1>
                 </div>
@@ -219,90 +222,12 @@
             </div>
         </div>
 
-        <!-- VISTA INSTRUCTOR -->
-        <div id="instructorView" style="display: none;">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <div class="card text-center">
-                    <div class="text-4xl font-bold text-[#822375] mb-2">5</div>
-                    <p class="text-gray-600">Cursos Activos</p>
-                </div>
-                <div class="card text-center">
-                    <div class="text-4xl font-bold text-[#1A3B5C] mb-2">127</div>
-                    <p class="text-gray-600">Estudiantes Totales</p>
-                </div>
-                <div class="card text-center">
-                    <div class="text-4xl font-bold text-[#FFB74D] mb-2">73%</div>
-                    <p class="text-gray-600">Progreso Promedio</p>
-                </div>
-            </div>
-            <h2 class="section-title">Entregas Pendientes</h2>
-            <p class="text-center text-gray-500">Vista de instructor</p>
-        </div>
-
-        <!-- VISTA ADMINISTRADOR -->
-        <div id="adminView" style="display: none;">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-                <div class="card">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-gray-600 text-sm mb-1">Total de Usuarios</p>
-                            <p class="text-3xl font-bold text-[#1A3B5C]">1,250</p>
-                        </div>
-                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292 4 4 0 010-5.292zM15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-gray-600 text-sm mb-1">Total de Cursos</p>
-                            <p class="text-3xl font-bold text-[#1A3B5C]">47</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-gray-600 text-sm mb-1">Módulos Completados</p>
-                            <p class="text-3xl font-bold text-[#1A3B5C]">342</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-gray-600 text-sm mb-1">Hoy</p>
-                            <p class="text-3xl font-bold text-[#1A3B5C]">28</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <h2 class="section-title">Vista Administrativa</h2>
-            <p class="text-center text-gray-500">Dashboards y reportes administrativos</p>
-
-            <!-- Propuestas de Cursos de Instructores -->
-            <div class="mb-8 mt-10">
-                <div class="flex items-center gap-3 mb-6">
-                    <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                        </svg>
-                    </div>
-                    <h2 class="section-title mb-0">Propuestas de Cursos de los Instructores</h2>
-                </div>
-                <div id="proposalsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                </div>
-                <p id="proposalsEmpty" class="text-center text-gray-500 mt-6">Aún no hay propuestas enviadas por los instructores.</p>
-            </div>
-        </div>
     </main>
 
     <script>
         // Obtener datos del usuario desde localStorage
-        const storedName = localStorage.getItem('userName');
+        const storedProfile = JSON.parse(localStorage.getItem('studentProfile') || 'null');
+        const storedName = (storedProfile && storedProfile.name) || localStorage.getItem('userName');
         const storedRole = localStorage.getItem('userRole');
 
         // MOCK DATA
@@ -368,48 +293,19 @@
 
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             const today = new Date().toLocaleDateString('es-ES', options);
-            document.getElementById('currentDate').textContent = today;
+            const currentDateEl = document.getElementById('currentDate');
+            if (currentDateEl) {
+                currentDateEl.textContent = today;
+            }
 
             if (user.role === 'ESTUDIANTE') {
                 document.getElementById('studentView').style.display = 'block';
-                document.getElementById('instructorView').style.display = 'none';
-                document.getElementById('adminView').style.display = 'none';
                 renderStudentDashboard(user);
             } else if (user.role === 'INSTRUCTOR') {
                 window.location.href = './dashboard_instructor.html';
             } else if (user.role === 'ADMINISTRADOR') {
-                document.getElementById('studentView').style.display = 'none';
-                document.getElementById('instructorView').style.display = 'none';
-                document.getElementById('adminView').style.display = 'block';
-                renderProposals();
+                window.location.href = './dashboard_admin.html';
             }
-        }
-
-        function renderProposals() {
-            const container = document.getElementById('proposalsContainer');
-            const empty = document.getElementById('proposalsEmpty');
-            const ideas = JSON.parse(localStorage.getItem('courseIdeas') || '[]');
-
-            if (!ideas.length) {
-                container.innerHTML = '';
-                empty.style.display = 'block';
-                return;
-            }
-
-            empty.style.display = 'none';
-            container.innerHTML = ideas.map(idea => `
-                <div class="card">
-                    <div class="flex items-center justify-between mb-3">
-                        <span class="badge badge-primary text-xs">${idea.category}</span>
-                        <span class="text-xs text-gray-500">${new Date(idea.createdAt).toLocaleDateString('es-ES')}</span>
-                    </div>
-                    <h3 class="font-bold text-[#1A3B5C] mb-2">${idea.title}</h3>
-                    <p class="text-sm text-gray-600 mb-4 line-clamp-3">${idea.desc}</p>
-                    <p class="text-xs text-gray-500">Contacto: ${idea.contact}</p>
-                    <p class="text-xs text-gray-500 mt-1">Teléfono: ${idea.phone || 'No registrado'}</p>
-                    <p class="text-xs text-gray-500 mt-1">Instructor: ${idea.instructorName || 'Instructor'}</p>
-                </div>
-            `).join('');
         }
 
         function renderStudentDashboard(user) {
@@ -450,6 +346,72 @@
         }
 
         document.addEventListener('DOMContentLoaded', initDashboard);
+    </script>
+
+    <script>
+        // Sidebar: drawer en móvil, colapsable en desktop
+        (function () {
+            const sidebar = document.querySelector('.sidebar');
+            if (!sidebar) return;
+
+            const toggleBtn = document.getElementById('sidebarToggle');
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const overlay = document.getElementById('sidebarOverlay');
+            const KEY = 'plaindaber_sidebar_collapsed';
+            const mq = window.matchMedia('(max-width: 768px)');
+
+            const openDrawer = function () {
+                sidebar.classList.add('open');
+                if (overlay) overlay.classList.add('visible');
+            };
+
+            const closeDrawer = function () {
+                sidebar.classList.remove('open');
+                if (overlay) overlay.classList.remove('visible');
+            };
+
+            const setCollapsed = function (collapsed) {
+                sidebar.classList.toggle('collapsed', collapsed);
+                document.body.classList.toggle('sidebar-collapsed', collapsed);
+                if (!mq.matches) localStorage.setItem(KEY, collapsed ? '1' : '0');
+            };
+
+            const updateMode = function () {
+                if (mq.matches) {
+                    closeDrawer();
+                    setCollapsed(true);
+                } else {
+                    closeDrawer();
+                    setCollapsed(localStorage.getItem(KEY) === '1');
+                }
+            };
+
+            if (hamburgerBtn) hamburgerBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                if (mq.matches) {
+                    if (sidebar.classList.contains('open')) closeDrawer();
+                    else openDrawer();
+                } else {
+                    setCollapsed(false);
+                }
+            });
+
+            if (toggleBtn) toggleBtn.addEventListener('click', function () { setCollapsed(true); });
+
+            if (overlay) overlay.addEventListener('click', closeDrawer);
+
+            sidebar.querySelectorAll('.nav-item').forEach(function (link) {
+                link.addEventListener('click', function () {
+                    if (mq.matches) closeDrawer();
+                });
+            });
+
+            if (mq.addEventListener) mq.addEventListener('change', updateMode);
+            else if (mq.addListener) mq.addListener(updateMode);
+
+            updateMode();
+        })();
     </script>
 </body>
 </html>

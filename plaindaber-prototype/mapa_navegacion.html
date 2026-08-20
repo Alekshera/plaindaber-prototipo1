@@ -172,6 +172,51 @@
     }
     footer img { height: 44px; background: #fff; border-radius: 14px; padding: 4px; }
     footer .f { font-size: 13px; opacity: .9; }
+
+    /* ===== Responsive móvil (≤ iPad mini) ===== */
+    @media (max-width: 768px) {
+      .banner {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px 18px;
+        gap: 12px;
+      }
+      .banner img { height: 48px; }
+      .banner h1 { font-size: 20px; }
+      .btn-back { margin-left: 0; }
+      .wrap { padding: 20px 16px 48px; }
+      .intro { padding: 16px 18px; }
+
+      /* Tarjetas a ancho completo y con buen área táctil */
+      .card {
+        width: 100%;
+        min-height: 44px;
+        padding: 8px 12px;
+        border-radius: 12px;
+      }
+      .card .ic { width: 28px; height: 28px; font-size: 13px; border-radius: 8px; }
+      .card .tt { font-size: 13px; overflow-wrap: anywhere; }
+      .tag { font-size: 10px; padding: 2px 8px; }
+
+      /* Menos sangría por nivel para evitar desbordamiento */
+      .tree ul { margin-left: 16px; padding-left: 12px; }
+      .tree ul li::before { left: -12px; width: 12px; }
+
+      /* Nodos con hijos: colapsables con indicador */
+      .tree li.has-sub > .node { cursor: pointer; }
+      .tree li.has-sub > .node .card { position: relative; }
+      .tree li.has-sub > .node .card::after {
+        content: '\25BE';
+        margin-left: auto;
+        font-size: 11px;
+        font-weight: 800;
+        color: var(--navy);
+        transition: transform .2s ease;
+      }
+      .tree li.has-sub > ul { display: none; }
+      .tree li.open > ul { display: block; }
+      .tree li.open > .node .card::after { transform: rotate(180deg); }
+    }
   </style>
 </head>
 <body>
@@ -531,6 +576,36 @@
         : 'src/pages/dashboard.html';
       window.location.href = target;
     });
+  </script>
+
+  <script>
+    // Árbol colapsable en móvil (≤768px). En desktop permanece como árbol estático.
+    (function () {
+      var mq = window.matchMedia('(max-width: 768px)');
+
+      var items = document.querySelectorAll('.tree li');
+      for (var i = 0; i < items.length; i++) {
+        (function (li) {
+          var node = null, ul = null, child;
+          for (var j = 0; j < li.children.length; j++) {
+            child = li.children[j];
+            if (child.classList && child.classList.contains('node')) node = child;
+            if (child.tagName === 'UL') ul = child;
+          }
+          if (!node || !ul) return;
+          li.classList.add('has-sub');
+
+          var card = node.querySelector('.card');
+          if (!card) return;
+          card.addEventListener('click', function (e) {
+            if (mq.matches) {
+              e.preventDefault();
+              li.classList.toggle('open');
+            }
+          });
+        })(items[i]);
+      }
+    })();
   </script>
 
 </body>

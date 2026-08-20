@@ -222,7 +222,7 @@
 <body>
 
   <header class="banner">
-    <img src="plaindaber-prototype/public/logo-plaindaber-nuevo.png" alt="Plaindaber" />
+    <img src="./logo-plaindaber-nuevo.png" alt="Plaindaber" />
     <div>
       <h1>Mapa de Navegación — Plaindaber</h1>
       <p>Árbol jerárquico de la arquitectura del sitio: recorrido del visitante, distribución y jerarquía del contenido.</p>
@@ -565,15 +565,15 @@
   <footer>
     <div class="f">Plaindaber — Plataforma Interactiva de diversas áreas del saber</div>
     <div class="f">Diseñado por:</div>
-    <img src="plaindaber-prototype/public/LOGO%20desarrollos%20aleshera.png" alt="Desarrollos Aleshera" />
+    <img src="./LOGO%20desarrollos%20aleshera.png" alt="Desarrollos Aleshera" />
   </footer>
 
   <script>
     document.getElementById('btnRegresar').addEventListener('click', function () {
       var role = localStorage.getItem('userRole');
       var target = role === 'INSTRUCTOR'
-        ? 'plaindaber-prototype/src/pages/dashboard_instructor.html'
-        : 'plaindaber-prototype/src/pages/dashboard.html';
+        ? 'src/pages/dashboard_instructor.html'
+        : 'src/pages/dashboard.html';
       window.location.href = target;
     });
   </script>

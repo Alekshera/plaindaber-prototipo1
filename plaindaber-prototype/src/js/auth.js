@@ -10,9 +10,6 @@ document.addEventListener('DOMContentLoaded', function () {
   const loginErrorAccept = document.getElementById('login-error-accept');
   const loginEmptyAlert = document.getElementById('login-empty-alert');
   const loginEmptyAccept = document.getElementById('login-empty-accept');
-  const loginPasswordMismatchAlert = document.getElementById('login-password-mismatch-alert');
-  const loginPasswordMismatchAccept = document.getElementById('login-password-mismatch-accept');
-
   const registerAlertName = document.getElementById('register-alert-name');
   const registerAlertNameAccept = document.getElementById('register-alert-name-accept');
   const registerAlertId = document.getElementById('register-alert-id');
@@ -59,15 +56,6 @@ document.addEventListener('DOMContentLoaded', function () {
     loginEmptyAlert.classList.add('hidden');
   }
 
-  function showLoginPasswordMismatchAlert() {
-    hideAllLoginAlerts();
-    loginPasswordMismatchAlert.classList.remove('hidden');
-  }
-
-  function hideLoginPasswordMismatchAlert() {
-    loginPasswordMismatchAlert.classList.add('hidden');
-  }
-
   function hideAllLoginAlerts() {
     if (alertBox) {
       alertBox.classList.add('hidden');
@@ -77,9 +65,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     if (loginEmptyAlert) {
       loginEmptyAlert.classList.add('hidden');
-    }
-    if (loginPasswordMismatchAlert) {
-      loginPasswordMismatchAlert.classList.add('hidden');
     }
   }
 
@@ -199,26 +184,47 @@ document.addEventListener('DOMContentLoaded', function () {
       event.preventDefault();
       const email = event.target.querySelector('#email')?.value.trim() || '';
       const password = event.target.querySelector('#password')?.value.trim() || '';
-      const confirmPassword = event.target.querySelector('#confirmPassword')?.value.trim() || '';
 
-      if (!email || !password || !confirmPassword) {
+      if (!email || !password) {
         showLoginEmptyAlert();
         return;
       }
 
-      if (password !== confirmPassword) {
-        showLoginPasswordMismatchAlert();
+      const storedUsers = JSON.parse(localStorage.getItem('plaindaberUsers') || '[]');
+      const registered = storedUsers.find(u => u.email.toLowerCase() === email.toLowerCase());
+
+      const demoOk = email === validEmail && password === validPassword;
+      const registeredOk = registered && registered.password === password;
+
+      if (!registeredOk && !demoOk) {
+        showLoginAlert();
         return;
       }
 
-      if (email !== validEmail || password !== validPassword) {
-        showLoginAlert();
+      // Guardar datos de sesión
+      const sessionName = registeredOk ? `${registered.nombre} ${registered.apellido}` : 'Usuario';
+      const sessionRole = registeredOk ? registered.role : 'ESTUDIANTE';
+
+      localStorage.setItem('userName', sessionName);
+      localStorage.setItem('userEmail', email);
+      localStorage.setItem('userRole', sessionRole);
+
+      const profile = { name: sessionName, email };
+      if (sessionRole === 'INSTRUCTOR') {
+        localStorage.setItem('instructorProfile', JSON.stringify(profile));
+      } else if (sessionRole === 'ADMINISTRADOR') {
+        localStorage.setItem('adminProfile', JSON.stringify(profile));
       } else {
-        // Guardar datos de sesión
-        localStorage.setItem('userName', 'Usuario');
-        localStorage.setItem('userRole', 'ESTUDIANTE');
-        window.location.href = './dashboard.html';
+        localStorage.setItem('studentProfile', JSON.stringify(profile));
       }
+
+      // Redirigir según el rol
+      const redirectByRole = {
+        'INSTRUCTOR': './dashboard_instructor.html',
+        'ADMINISTRADOR': './dashboard_admin.html',
+        'ESTUDIANTE': './dashboard.html'
+      };
+      window.location.href = redirectByRole[sessionRole] || './dashboard.html';
     });
   }
 
@@ -288,11 +294,31 @@ document.addEventListener('DOMContentLoaded', function () {
       localStorage.setItem('userName', `${nombre} ${apellido}`);
       localStorage.setItem('userEmail', email);
       localStorage.setItem('userRole', mappedRole);
+
+      const profile = { name: `${nombre} ${apellido}`, email };
+      if (mappedRole === 'INSTRUCTOR') {
+        localStorage.setItem('instructorProfile', JSON.stringify(profile));
+      } else if (mappedRole === 'ADMINISTRADOR') {
+        localStorage.setItem('adminProfile', JSON.stringify(profile));
+      } else {
+        localStorage.setItem('studentProfile', JSON.stringify(profile));
+      }
+
+      // Guardar credenciales para el login
+      const storedUsers = JSON.parse(localStorage.getItem('plaindaberUsers') || '[]');
+      const existingUser = storedUsers.find(u => u.email.toLowerCase() === email.toLowerCase());
+      const newUser = { nombre, apellido, email, password, role: mappedRole };
+      if (existingUser) {
+        Object.assign(existingUser, newUser);
+      } else {
+        storedUsers.push(newUser);
+      }
+      localStorage.setItem('plaindaberUsers', JSON.stringify(storedUsers));
       
       // Redirigir según el rol
       const redirectByRole = {
         'INSTRUCTOR': './dashboard_instructor.html',
-        'ADMINISTRADOR': './dashboard.html',
+        'ADMINISTRADOR': './dashboard_admin.html',
         'ESTUDIANTE': './dashboard.html'
       };
       window.location.href = redirectByRole[mappedRole] || './dashboard.html';
@@ -320,12 +346,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (loginEmptyAccept) {
     loginEmptyAccept.addEventListener('click', function () {
-      hideAllLoginAlerts();
-    });
-  }
-
-  if (loginPasswordMismatchAccept) {
-    loginPasswordMismatchAccept.addEventListener('click', function () {
       hideAllLoginAlerts();
     });
   }

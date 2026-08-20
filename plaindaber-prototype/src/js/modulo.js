@@ -299,12 +299,17 @@ window.evaluarCuestionario = function (idContenido) {
 /* ============================================================
    ACTIVIDAD: RELACIONAR (arrastrar y soltar)
    ============================================================ */
+function esDispositivoTactil() {
+    return window.matchMedia && window.matchMedia('(hover: none)').matches;
+}
+
 function renderizarRelacionar(contenido) {
     const cfg = contenido.configuracion || {};
     const columnas = cfg.columnas || [];
     const desordenadas = [...columnas].reverse();
     const terminada = contenido.estado === 'completada' || estadoEstudiante.puntajes[contenido.id] !== undefined;
     const puntaje = estadoEstudiante.puntajes[contenido.id];
+    const tactil = esDispositivoTactil();
 
     const cuerpo = terminada
         ? `<div class="feedback-alerta feedback-alerta-succ">Actividad completada con ${puntaje}/${cfg.puntajeMaximo} puntos.</div>`
@@ -312,10 +317,12 @@ function renderizarRelacionar(contenido) {
         <div class="actividad-arrastre" id="arrastre-${contenido.id}">
             <div class="arastre-columna">
                 <h5>Componentes</h5>
+                ${tactil ? '<p class="text-xs text-gray-500 mb-2">Toca un componente y luego toca su función.</p>' : ''}
                 <div id="origen-${contenido.id}">
                     ${desordenadas.map(col =>
-                        `<div class="pieza-drag" draggable="true" data-nombre="${col.nombre}"
-                              ondragstart="iniciarArrastreGlobal(event)">${col.nombre}</div>`).join('')}
+                        `<div class="pieza-drag" data-nombre="${col.nombre}" draggable="true"
+                              ondragstart="iniciarArrastreGlobal(event)"
+                              ${tactil ? `onclick="seleccionarPieza(event, ${contenido.id})"` : ''}>${col.nombre}</div>`).join('')}
                 </div>
             </div>
             <div class="arastre-columna">
@@ -324,7 +331,8 @@ function renderizarRelacionar(contenido) {
                     ${columnas.map(col =>
                         `<div class="zona-drop" data-contenedor="${col.correcta}" id="zona-${contenido.id}-${col.correcta.replace(/\s/g, '')}"
                               ondragover="permitirSoltar(event)" ondrop="soltarPieza(event, ${contenido.id})"
-                              ondragenter="activarZona(event)" ondragleave="desactivarZona(event)">
+                              ondragenter="activarZona(event)" ondragleave="desactivarZona(event)"
+                              ${tactil ? `onclick="soltarPiezaTactil(event, ${contenido.id})"` : ''}>
                               <span class="text-gray-500">${col.correcta}</span>
                             </div>`).join('')}
                 </div>
@@ -337,6 +345,7 @@ function renderizarRelacionar(contenido) {
 }
 
 let piezaEnMovimiento = null;
+let piezaSeleccionada = null;
 
 window.iniciarArrastreGlobal = function (e) {
     piezaEnMovimiento = e.target;
@@ -358,6 +367,23 @@ window.desactivarZona = function (e) {
     e.target.classList.remove('activa');
 };
 
+function colocarPiezaEnZona(zona, pieza, idContenido) {
+    const contenido = buscarContenido(idContenido);
+    if (!contenido || !pieza) return;
+
+    pieza.classList.remove('arrastrando', 'seleccionada');
+    pieza.classList.add('ubicada');
+
+    const cfg = contenido.configuracion || {};
+    const columna = (cfg.columnas || []).find(c => c.nombre === pieza.dataset.nombre);
+    const correcta = columna && columna.correcta === zona.dataset.contenedor;
+
+    zona.classList.add(correcta ? 'correcta' : 'incorrecta');
+    zona.textContent = `${pieza.dataset.nombre} → ${zona.dataset.contenedor} ${correcta ? '✓' : '✗'}`;
+    zona.dataset.pieza = pieza.dataset.nombre;
+    zona.dataset.ok = correcta ? '1' : '0';
+}
+
 window.soltarPieza = function (e, idContenido) {
     e.preventDefault();
     e.target.classList.remove('activa');
@@ -372,21 +398,31 @@ window.soltarPieza = function (e, idContenido) {
     if (!nombre) return;
 
     const pieza = piezaEnMovimiento;
-    if (pieza) {
-        pieza.classList.remove('arrastrando');
-        pieza.classList.add('ubicada');
-    }
-
-    const cfg = contenido.configuracion || {};
-    const columna = (cfg.columnas || []).find(c => c.nombre === nombre);
-    const correcta = columna && columna.correcta === zona.dataset.contenedor;
-
-    zona.classList.add(correcta ? 'correcta' : 'incorrecta');
-    zona.textContent = `${nombre} → ${zona.dataset.contenedor} ${correcta ? '✓' : '✗'}`;
-    zona.dataset.pieza = nombre;
-    zona.dataset.ok = correcta ? '1' : '0';
+    colocarPiezaEnZona(zona, pieza, idContenido);
 
     piezaEnMovimiento = null;
+};
+
+window.seleccionarPieza = function (e, idContenido) {
+    e.preventDefault();
+    const pieza = e.target.closest('.pieza-drag');
+    if (!pieza || pieza.classList.contains('ubicada')) return;
+
+    if (piezaSeleccionada && piezaSeleccionada !== pieza) {
+        piezaSeleccionada.classList.remove('seleccionada');
+    }
+    piezaSeleccionada = pieza;
+    pieza.classList.add('seleccionada');
+};
+
+window.soltarPiezaTactil = function (e, idContenido) {
+    e.preventDefault();
+    const zona = e.target.closest('.zona-drop');
+    if (!zona || !piezaSeleccionada) return;
+
+    const pieza = piezaSeleccionada;
+    piezaSeleccionada = null;
+    colocarPiezaEnZona(zona, pieza, idContenido);
 };
 
 window.evaluarRelacionar = function (idContenido) {

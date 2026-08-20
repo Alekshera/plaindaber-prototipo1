@@ -6,23 +6,26 @@
     <title>Dashboard Instructor - PLAINDABER</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <script type="module" crossorigin src="/plaindaber-prototipo1/assets/dashboard_instructor-CbBVozb5.js"></script>
+  <script type="module" crossorigin src="/plaindaber-prototipo1/assets/dashboard_instructor-D4geDYnF.js"></script>
   <link rel="modulepreload" crossorigin href="/plaindaber-prototipo1/assets/modulepreload-polyfill-P2Xu9kJm.js">
-  <link rel="stylesheet" crossorigin href="/plaindaber-prototipo1/assets/dashboard-CmqQSik8.css">
+  <link rel="stylesheet" crossorigin href="/plaindaber-prototipo1/assets/dashboard-BdMTnUUr.css">
 </head>
 <body class="bg-[#FDFBF7]">
   <!-- Sidebar -->
   <div class="sidebar text-white">
-    <div class="logo-wrap">
-      <img src="/plaindaber-prototipo1/logo-plaindaber-nuevo.png" alt="Plaindaber" />
-    </div>
-
+    <!-- Botón para ocultar el menú -->
+    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Ocultar menú" title="Ocultar menú">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+      </svg>
+    </button>
     <nav class="sidebar-nav">
-      <a href="dashboard_instructor.html" class="nav-item active">
+      <a href="dashboard_instructor.html" class="nav-item active relative">
         <svg class="nav-icon w-5 h-5" fill="none" stroke="#FFD54F" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 12l2-3m0 0l7-4 7 4M5 9v10a1 1 0 001 1h12a1 1 0 001-1V9m-9 11l4-4m0 0l4 4m-4-4V3"></path>
         </svg>
         <span class="sidebar-tooltip">Dashboard</span>
+        <span id="instructorNotifBadge" style="display:none; position:absolute; right:-4px; top:-4px; width:18px; height:18px; border-radius:9999px; background:#EF4444; color:#fff; font-size:10px; font-weight:700; line-height:18px; text-align:center; box-shadow:0 0 0 2px #1A3B5C;"></span>
       </a>
       <a href="cursos.html" class="nav-item">
         <svg class="nav-icon w-5 h-5" fill="none" stroke="#E8913B" viewBox="0 0 24 24">
@@ -64,17 +67,31 @@
   </div>
 
   <!-- Main Content -->
+  <!-- Overlay del drawer (móvil) -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
   <main class="main-content">
     <!-- Header: franja azul superior -->
     <div class="top-banner mb-8">
       <div class="top-banner-inner">
+        <div class="banner-start">
+          <button class="banner-hamburger" id="hamburgerBtn" aria-label="Mostrar menú" title="Mostrar menú">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+          <img src="/plaindaber-prototipo1/logo-plaindaber-nuevo.png" alt="Plaindaber" class="banner-logo" />
+        </div>
         <div>
           <h1 class="banner-title" id="dashboardTitle">Bienvenido</h1>
         </div>
-        <div class="text-right">
-          <p class="banner-date" id="currentDate">Hoy</p>
+        
+
         </div>
+        
       </div>
+      <!-- div class="text-right">
+          <p class="banner-date" id="currentDate">Hoy</p -->
     </div>
 
     <!-- VISTA INSTRUCTOR -->
@@ -93,6 +110,9 @@
           <p class="text-gray-600">Progreso Promedio</p>
         </div>
       </div>
+
+      <!-- Notificaciones de ideas de cursos -->
+      <div id="ideaNotifications" class="mb-8"></div>
 
       <h2 class="section-title">Entregas Pendientes</h2>
       <p class="text-center text-gray-500">Vista de instructor</p>
@@ -164,7 +184,8 @@
   </main>
 
   <script>
-    const storedName = localStorage.getItem('userName');
+    const storedProfile = JSON.parse(localStorage.getItem('instructorProfile') || 'null');
+    const storedName = (storedProfile && storedProfile.name) || localStorage.getItem('userName');
     const storedRole = localStorage.getItem('userRole');
 
     window.currentUser = {
@@ -172,5 +193,71 @@
       role: storedRole || "INSTRUCTOR"
     };
   </script>
+
+    <script>
+        // Sidebar: drawer en móvil, colapsable en desktop
+        (function () {
+            const sidebar = document.querySelector('.sidebar');
+            if (!sidebar) return;
+
+            const toggleBtn = document.getElementById('sidebarToggle');
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const overlay = document.getElementById('sidebarOverlay');
+            const KEY = 'plaindaber_sidebar_collapsed';
+            const mq = window.matchMedia('(max-width: 768px)');
+
+            const openDrawer = function () {
+                sidebar.classList.add('open');
+                if (overlay) overlay.classList.add('visible');
+            };
+
+            const closeDrawer = function () {
+                sidebar.classList.remove('open');
+                if (overlay) overlay.classList.remove('visible');
+            };
+
+            const setCollapsed = function (collapsed) {
+                sidebar.classList.toggle('collapsed', collapsed);
+                document.body.classList.toggle('sidebar-collapsed', collapsed);
+                if (!mq.matches) localStorage.setItem(KEY, collapsed ? '1' : '0');
+            };
+
+            const updateMode = function () {
+                if (mq.matches) {
+                    closeDrawer();
+                    setCollapsed(true);
+                } else {
+                    closeDrawer();
+                    setCollapsed(localStorage.getItem(KEY) === '1');
+                }
+            };
+
+            if (hamburgerBtn) hamburgerBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                if (mq.matches) {
+                    if (sidebar.classList.contains('open')) closeDrawer();
+                    else openDrawer();
+                } else {
+                    setCollapsed(false);
+                }
+            });
+
+            if (toggleBtn) toggleBtn.addEventListener('click', function () { setCollapsed(true); });
+
+            if (overlay) overlay.addEventListener('click', closeDrawer);
+
+            sidebar.querySelectorAll('.nav-item').forEach(function (link) {
+                link.addEventListener('click', function () {
+                    if (mq.matches) closeDrawer();
+                });
+            });
+
+            if (mq.addEventListener) mq.addEventListener('change', updateMode);
+            else if (mq.addListener) mq.addListener(updateMode);
+
+            updateMode();
+        })();
+    </script>
 </body>
 </html>

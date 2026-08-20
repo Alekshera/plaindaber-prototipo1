@@ -13,6 +13,7 @@ export default defineConfig({
         registro: 'src/pages/registro.html',
         dashboard: 'src/pages/dashboard.html',
         dashboard_instructor: 'src/pages/dashboard_instructor.html',
+        dashboard_admin: 'src/pages/dashboard_admin.html',
         curso: 'src/pages/curso.html',
         cursos: 'src/pages/cursos.html',
         curso_huerta: 'src/pages/curso_huerta.html',
