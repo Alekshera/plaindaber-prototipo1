@@ -306,7 +306,7 @@
                     <div class="node">
                       <div class="card c-navy">
                         <span class="ic">A</span>
-                        <span class="tt">dashboard.html<small>Rol: Administrador · ver propuestas y reportes</small></span>
+                        <span class="tt">dashboard_admin.html<small>Rol: Administrador · ver propuestas y reportes</small></span>
                         <span class="tag">Admin</span>
                       </div>
                     </div>
@@ -354,6 +354,15 @@
                       </div>
                     </div>
                   </li>
+                  <li>
+                    <div class="node">
+                      <div class="card c-green">
+                        <span class="ic">A</span>
+                        <span class="tt">dashboard_admin.html<small>Menú principal · Administrador</small></span>
+                        <span class="tag">Inicio</span>
+                      </div>
+                    </div>
+                  </li>
                 </ul>
               </li>
             </ul>
@@ -366,7 +375,8 @@
     <div class="group-label">Zona autenticada · menú principal (sidebar)</div>
     <div class="note-wrap">
       Las siguientes páginas comparten el sidebar de navegación y son accesibles desde
-      <code>dashboard.html</code>, <code>dashboard_instructor.html</code> y entre sí.
+      <code>dashboard.html</code>, <code>dashboard_instructor.html</code>,
+      <code>dashboard_admin.html</code> y entre sí.
       Representan la jerarquía de segundo nivel del sitio.
     </div>
     <ul class="tree">
@@ -495,7 +505,7 @@
             <div class="node">
               <div class="card c-green">
                 <span class="ic">R</span>
-                <span class="tt">dashboard.html<small>Vista Administrador: Reportes y propuestas de cursos</small></span>
+                <span class="tt">dashboard_admin.html<small>Vista Administrador: Reportes y propuestas de cursos</small></span>
                 <span class="tag">Admin</span>
               </div>
             </div>
@@ -540,10 +550,11 @@
       </div>
       <div class="tile dos">
         <h3>2 · Menú principal / autenticado</h3>
-        <span class="count">5</span> páginas
+        <span class="count">6</span> páginas
         <ul>
           <li>dashboard.html</li>
           <li>dashboard_instructor.html</li>
+          <li>dashboard_admin.html</li>
           <li>cursos.html (catálogo)</li>
           <li>foro.html</li>
           <li>videollamada.html</li>
@@ -556,7 +567,7 @@
           <li>curso_huerta.html (detalle del curso, ?id=N)</li>
           <li>modulo.html (módulo interactivo, ?id=N)</li>
         </ul>
-        <p style="margin-top:10px;font-size:13px;color:#6B7280">Total: <strong>11 páginas funcionales</strong> (curso.html es un placeholder sin enlazar).</p>
+        <p style="margin-top:10px;font-size:13px;color:#6B7280">Total: <strong>12 páginas funcionales</strong> (curso.html es un placeholder sin enlazar).</p>
       </div>
     </div>
 
@@ -573,7 +584,9 @@
       var role = localStorage.getItem('userRole');
       var target = role === 'INSTRUCTOR'
         ? 'plaindaber-prototype/src/pages/dashboard_instructor.html'
-        : 'plaindaber-prototype/src/pages/dashboard.html';
+        : role === 'ADMINISTRADOR'
+          ? 'plaindaber-prototype/src/pages/dashboard_admin.html'
+          : 'plaindaber-prototype/src/pages/dashboard.html';
       window.location.href = target;
     });
   </script>

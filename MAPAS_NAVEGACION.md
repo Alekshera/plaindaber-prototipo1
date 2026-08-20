@@ -13,10 +13,11 @@ login.html ──────────────► registro.html
    │                       (formulario registro)
    ├─► recuperar_password.html ──► login.html
    │
-   └─ (login OK) ──► según rol ──► dashboard.html | dashboard_instructor.html
+   └─ (login OK) ──► según rol ──► dashboard.html | dashboard_instructor.html | dashboard_admin.html
 
 registro.html (submit)
-   ├─ Estudiante / Administrador ──► dashboard.html
+   ├─ Estudiante ─────────────────► dashboard.html
+   ├─ Administrador ──────────────► dashboard_admin.html
    └─ Profesor (INSTRUCTOR) ────────► dashboard_instructor.html
 
 ┌─────────────── ZONA AUTENTICADA (Sidebar compartido) ───────────────┐
@@ -32,6 +33,8 @@ registro.html (submit)
 │                          (módulos encadenados)                      │
 │                          └──► volver a curso_huerta.html            │
 │                                                                     │
+│   dashboard_admin.html (Administrador: propuestas y reportes)       │
+│                                                                     │
 │   Cualquier página ──(logout)──► login.html                         │
 └─────────────────────────────────────────────────────────────────────┘
 ```
@@ -43,8 +46,8 @@ registro.html (submit)
 | Página | Ruta | Enlaces salientes |
 |---|---|---|
 | `index.html` | raíz | Redirige a `src/pages/login.html` (meta refresh + JS) |
-| `login.html` | Iniciar sesión | `recuperar_password.html` · `registro.html` · login OK → `dashboard.html` (rol guardado: ESTUDIANTE) |
-| `registro.html` | Registro | Al enviar: `dashboard.html` (estudiante/admin) o `dashboard_instructor.html` (instructor) según rol |
+| `login.html` | Iniciar sesión | `recuperar_password.html` · `registro.html` · login OK → `dashboard.html` (redirige por rol: estudiante/instructor/administrador) |
+| `registro.html` | Registro | Al enviar: `dashboard.html` (estudiante), `dashboard_admin.html` (administrador) o `dashboard_instructor.html` (instructor) según rol |
 | `recuperar_password.html` | Recuperar contraseña | Al completar OK → `login.html` · enlaces a `login.html` |
 
 ### Autenticados (sidebar común)
@@ -53,8 +56,9 @@ Sidebar: Dashboard · Cursos · Foro · Videollamadas · (admin: Reportes) · Co
 
 | Página | Ruta | Enlaces únicos |
 |---|---|---|
-| `dashboard.html` | Vista estudiante y administrador | Sidebar → `cursos.html`, `foro.html`, `videollamada.html`; "Continuar" curso → `curso_huerta.html`; rol instructor → redirige a `dashboard_instructor.html`; logout → `login.html` |
+| `dashboard.html` | Vista estudiante | Sidebar → `cursos.html`, `foro.html`, `videollamada.html`; "Continuar" curso → `curso_huerta.html`; rol instructor → redirige a `dashboard_instructor.html`; rol administrador → redirige a `dashboard_admin.html`; logout → `login.html` |
 | `dashboard_instructor.html` | Vista instructor | Sidebar → `cursos.html`, `foro.html`, `videollamada.html`; logout → `login.html` |
+| `dashboard_admin.html` | Vista administrador | Sidebar → `cursos.html`, `foro.html`, `videollamada.html`; aprobar/rechazar propuestas de instructores (modal de estado); logout → `login.html` |
 | `cursos.html` | Catálogo de cursos | Tarjeta de curso → `curso_huerta.html?id=N`; sidebar → `dashboard.html`, `foro.html`, `videollamada.html`; logout |
 | `curso_huerta.html` | Detalle de curso | "← Volver a cursos" → `cursos.html`; "Abrir módulo interactivo" → `modulo.html?id=N`; sidebar + logout |
 | `modulo.html` | Módulo interactivo | "← Volver al curso" → `curso_huerta.html`; siguiente/otro módulo → `modulo.html?id=N`; sidebar + logout |
@@ -70,12 +74,14 @@ Sidebar: Dashboard · Cursos · Foro · Videollamadas · (admin: Reportes) · Co
 
 | Origen | Condición | Destino | Archivo |
 |---|---|---|---|
-| Login exitoso | email/password válidos | `dashboard.html` | `src/js/auth.js:220` |
-| Registro | rol INSTRUCTOR | `dashboard_instructor.html` | `src/js/auth.js:294` |
-| Registro | rol ESTUDIANTE / ADMIN | `dashboard.html` | `src/js/auth.js:295-298` |
-| Login erróneo ("No") | alerta | `registro.html` | `src/js/auth.js:311` |
-| Recuperar OK | — | `login.html` | `src/js/auth.js:426` |
-| Auth (dashboard.view) | rol INSTRUCTOR | `dashboard_instructor.html` | `src/pages/dashboard.html:376` |
+| Login exitoso | email/password válidos | `dashboard.html` / `dashboard_instructor.html` / `dashboard_admin.html` según rol | `src/js/auth.js:221-227` |
+| Registro | rol INSTRUCTOR | `dashboard_instructor.html` | `src/js/auth.js:320` |
+| Registro | rol ADMINISTRADOR | `dashboard_admin.html` | `src/js/auth.js:321` |
+| Registro | rol ESTUDIANTE | `dashboard.html` | `src/js/auth.js:322-324` |
+| Login erróneo ("No") | alerta | `registro.html` | `src/js/auth.js:335-337` |
+| Recuperar OK | — | `login.html` | `src/js/auth.js:446` |
+| Auth (dashboard.view) | rol INSTRUCTOR | `dashboard_instructor.html` | `src/pages/dashboard.html:305` |
+| Auth (dashboard.view) | rol ADMINISTRADOR | `dashboard_admin.html` | `src/pages/dashboard.html:307` |
 | Auth (dashboard.view) | Cerrar sesión | `login.html` | `src/pages/dashboard.html:445` |
 | Auth | logout en sidebars | `login.html` | `foro.html`, `cursos.html`, `modulo.html`, `videollamada.html`, `dashboard_instructor.js`, `curso_huerta.js` |
 | Catálogo | tarjeta click | `curso_huerta.html?id=N` | `src/js/cursos.js:227,249` |
@@ -87,7 +93,7 @@ Sidebar: Dashboard · Cursos · Foro · Videollamadas · (admin: Reportes) · Co
 
 - **Estudiante**: login → `dashboard.html`, cursos, módulos, foro, videollamadas.
 - **Instructor**: registro/login → `dashboard_instructor.html`, gestiona cursos/link a catálogo, foro, videollamadas.
-- **Administrador**: registro/login → `dashboard.html` (vista admin con propuestas de cursos de instructores), reportes.
+- **Administrador**: registro/login → `dashboard_admin.html` (vista admin con propuestas de cursos de instructores), reportes.
 
 ## 5. Rutas de salida directa al navegador (sin clicks)
 
