@@ -144,7 +144,7 @@ function estadoVisual(estado) {
     }
 }
 
-/* ---------- Renderizado: lista de módulos ---------- */
+/* ---------- Renderizado: lista de módulos (ítems en una línea) ---------- */
 function renderListaModulos() {
     const container = document.getElementById('moduleList');
     const activo = getModuloActualId();
@@ -153,6 +153,7 @@ function renderListaModulos() {
         const vis = estadoVisual(modulo.estado);
         const esActivo = modulo.id === activo;
         const bloq = modulo.estado === ESTADO.BLOQUEADO;
+        const cta = modulo.estado === ESTADO.DISPONIBLE ? 'Continuar' : '';
 
         return `
             <div class="module-item ${modulo.estado} ${esActivo ? 'selected' : ''}"
@@ -162,12 +163,27 @@ function renderListaModulos() {
                  tabindex="${bloq ? '-1' : '0'}"
                  aria-label="Módulo ${modulo.id}: ${modulo.titulo} (${ESTADO_LABEL[modulo.estado]})">
                 <span class="module-icon ${vis.class}">${vis.icono}</span>
-                <div>
-                    <div class="module-title">Módulo ${modulo.id} · ${modulo.titulo}</div>
-                    <div class="module-subtitle">${ESTADO_LABEL[modulo.estado]}</div>
-                </div>
+                <span class="module-title">Módulo ${modulo.id} · ${modulo.titulo}</span>
+                ${cta ? `<span class="module-cta">${cta} →</span>` : `<span class="module-chevron">›</span>`}
             </div>`;
     }).join('');
+
+    const count = document.getElementById('moduleListCount');
+    if (count) count.textContent = getModulos().length;
+}
+
+/* ---------- Toggle de la lista de módulos (colapsable por defecto) ---------- */
+function initModuleListToggle() {
+    const toggle = document.getElementById('moduleListToggle');
+    const wrap = document.getElementById('moduleListWrap');
+    if (!toggle || !wrap) return;
+
+    toggle.addEventListener('click', function () {
+        const abierta = !wrap.classList.contains('hidden');
+        wrap.classList.toggle('hidden', abierta);
+        toggle.classList.toggle('open', !abierta);
+        toggle.setAttribute('aria-expanded', String(!abierta));
+    });
 }
 
 /* ---------- Selección de módulo (acordeón) ---------- */
@@ -431,6 +447,7 @@ function seleccionarPrimerDisponible() {
 document.addEventListener('DOMContentLoaded', () => {
     actualizarProgresoGlobal();
     renderListaModulos();
+    initModuleListToggle();
 
     // Preseleccionar el módulo actual (el que esté disponible/completado)
     const actual = getModuloActualId();

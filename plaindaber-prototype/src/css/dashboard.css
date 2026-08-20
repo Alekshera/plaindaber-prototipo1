@@ -392,7 +392,7 @@ body.sidebar-collapsed .main-content {
 }
 
 /* La hamburguesa se muestra en móvil o cuando el sidebar está colapsado en desktop */
-@media (min-width: 769px) {
+@media (min-width: 801px) {
     body.sidebar-collapsed .banner-hamburger {
         display: inline-flex;
     }
@@ -415,7 +415,7 @@ body.sidebar-collapsed .main-content {
 }
 
 /* ---------- Responsive móvil (al final para que gane sobre las reglas base) ---------- */
-@media (max-width: 768px) {
+@media (max-width: 800px) {
     /* El sidebar se convierte en un drawer que se desliza desde la izquierda */
     .sidebar {
         display: flex;
@@ -501,13 +501,25 @@ body.sidebar-collapsed .main-content {
         margin: -1rem -1rem 1rem -1rem;
         min-height: 76px;
         padding: 0.75rem 1rem;
+        position: static;
     }
 
     .banner-title {
         font-size: 1.25rem;
     }
 
+    .banner-start {
+        margin-left: 56px;
+    }
+
     .banner-hamburger {
         display: inline-flex;
+        position: fixed;
+        top: 0.75rem;
+        left: 0.75rem;
+        z-index: 45;
+        background: #1A3B5C;
+        border-color: rgba(255, 255, 255, 0.35);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
     }
 }

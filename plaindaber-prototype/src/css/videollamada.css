@@ -339,7 +339,7 @@ main.main-content .banner-subtitle {
 }
 
 /* ---------- Responsive ---------- */
-@media (max-width: 768px) {
+@media (max-width: 800px) {
     .grid-camara {
         grid-template-columns: 1fr !important;
     }

@@ -257,57 +257,125 @@ body {
     margin-bottom: 1.25rem;
 }
 
-/* ---------- Módulos (lista tipo acordeón) ---------- */
+/* ---------- Módulos (lista tipo acordeón colapsable) ---------- */
+
+/* Cabecera colapsable (una fila) */
+.module-list-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    width: 100%;
+    padding: 0.6rem 0.9rem;
+    background: white;
+    border: 2px solid transparent;
+    border-radius: 0.9rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+    font-family: inherit;
+    text-align: left;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.module-list-toggle:hover {
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+    border-color: var(--primary);
+}
+
+.module-list-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 0.5rem;
+    background: var(--accent);
+    color: var(--primary);
+    flex-shrink: 0;
+}
+
+.module-list-title {
+    flex: 1 1 auto;
+    min-width: 0;
+    font-weight: 700;
+    color: var(--primary);
+    font-size: 0.95rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.module-list-count {
+    flex-shrink: 0;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--primary);
+    background: #EDE9E1;
+    border-radius: 999px;
+    padding: 0.15rem 0.6rem;
+}
+
+.module-list-chevron {
+    flex-shrink: 0;
+    color: var(--primary);
+    font-size: 0.85rem;
+    transition: transform 0.2s ease;
+}
+
+.module-list-toggle.open .module-list-chevron {
+    transform: rotate(180deg);
+}
+
+/* Ítems de módulo: una sola línea */
 .module-item {
     background: white;
     border: 2px solid transparent;
-    border-radius: 1rem;
-    padding: 1rem 1.25rem;
+    border-radius: 0.75rem;
+    padding: 0.5rem 0.75rem;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 0.9rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-    transition: all 0.25s ease;
+    gap: 0.6rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    transition: all 0.2s ease;
 }
 
 .module-item:hover {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
 }
 
 /* Estado: bloqueado */
 .module-item.bloqueado {
-    opacity: 0.6;
+    opacity: 0.55;
     cursor: not-allowed;
-    border-left: 4px solid var(--estado-bloqueado);
+    border-left: 3px solid var(--estado-bloqueado);
 }
 
 /* Estado: disponible */
 .module-item.disponible {
-    border-left: 4px solid var(--estado-disponible);
+    border-left: 3px solid var(--estado-disponible);
 }
 
 /* Estado: completado */
 .module-item.completado {
-    border-left: 4px solid var(--estado-completado);
+    border-left: 3px solid var(--estado-completado);
 }
 
 /* Módulo seleccionado */
 .module-item.selected {
     outline: 3px solid var(--secondary);
-    outline-offset: 2px;
+    outline-offset: 1px;
 }
 
-/* Icono circular del estado */
+/* Icono circular del estado (compacto) */
 .module-icon {
-    width: 38px;
-    height: 38px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.1rem;
+    font-size: 0.8rem;
     flex-shrink: 0;
     color: white;
 }
@@ -316,16 +384,33 @@ body {
 .module-icon.disponible { background: var(--estado-disponible); color: var(--primary); }
 .module-icon.completado { background: var(--estado-completado); color: white; }
 
+/* Título truncado en una línea */
 .module-title {
+    flex: 1 1 auto;
+    min-width: 0;
     font-weight: 600;
     color: var(--primary);
-    font-size: 0.95rem;
-    line-height: 1.3;
+    font-size: 0.85rem;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.module-subtitle {
-    font-size: 0.75rem;
-    color: #6B7280;
+/* CTA / chevron a la derecha */
+.module-cta {
+    flex-shrink: 0;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--secondary);
+    white-space: nowrap;
+}
+
+.module-chevron {
+    flex-shrink: 0;
+    color: #9CA3AF;
+    font-size: 1rem;
+    line-height: 1;
 }
 
 /* ---------- Panel de contenido ---------- */
@@ -522,7 +607,7 @@ body.sidebar-collapsed .main-content {
 }
 
 /* La hamburguesa se muestra en móvil o cuando el sidebar está colapsado en desktop */
-@media (min-width: 769px) {
+@media (min-width: 801px) {
     body.sidebar-collapsed .banner-hamburger {
         display: inline-flex;
     }
@@ -545,7 +630,7 @@ body.sidebar-collapsed .main-content {
 }
 
 /* ---------- Responsive móvil (al final para que gane sobre las reglas base) ---------- */
-@media (max-width: 768px) {
+@media (max-width: 800px) {
     /* El sidebar se convierte en un drawer que se desliza desde la izquierda */
     .sidebar {
         display: flex;
@@ -632,6 +717,7 @@ body.sidebar-collapsed .main-content {
         margin: -1rem -1rem 1rem -1rem;
         min-height: 76px;
         padding: 0.75rem 1rem;
+        position: static;
     }
     .banner-title {
         font-size: 1.25rem;
@@ -641,14 +727,24 @@ body.sidebar-collapsed .main-content {
         padding: 0.5rem 0.9rem;
         white-space: normal;
     }
+    .banner-start {
+        margin-left: 56px;
+    }
     .banner-hamburger {
         display: inline-flex;
+        position: fixed;
+        top: 0.75rem;
+        left: 0.75rem;
+        z-index: 45;
+        background: #1A3B5C;
+        border-color: rgba(255, 255, 255, 0.35);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
     }
     .module-item {
-        padding: 0.85rem 1rem;
+        padding: 0.5rem 0.75rem;
     }
     .module-title {
-        font-size: 0.85rem;
+        font-size: 0.82rem;
     }
     .content-card {
         padding: 1.25rem;

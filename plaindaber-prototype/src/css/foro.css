@@ -371,7 +371,7 @@
 }
 
 /* ---------- Responsive: sidebar ya es fijo desde dashboard.css ---------- */
-@media (max-width: 768px) {
+@media (max-width: 800px) {
     .mensaje-burbuja {
         padding: 0.75rem;
     }

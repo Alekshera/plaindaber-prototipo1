@@ -9,9 +9,9 @@
     <!-- Tipografías -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <!-- Estilos personalizados -->
-  <script type="module" crossorigin src="/plaindaber-prototipo1/assets/curso_huerta-DrrX8V48.js"></script>
+  <script type="module" crossorigin src="/plaindaber-prototipo1/assets/curso_huerta-1Kj7iLPm.js"></script>
   <link rel="modulepreload" crossorigin href="/plaindaber-prototipo1/assets/modulepreload-polyfill-P2Xu9kJm.js">
-  <link rel="stylesheet" crossorigin href="/plaindaber-prototipo1/assets/curso_huerta-XZ7iyes-.css">
+  <link rel="stylesheet" crossorigin href="/plaindaber-prototipo1/assets/curso_huerta-CxJLL5df.css">
 </head>
 <body class="bg-[#FDFBF7]">
 
@@ -109,10 +109,22 @@
         <!-- Fila: lista de módulos + contenido detallado -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-            <!-- Columna izquierda: lista de módulos (acordeón) -->
+            <!-- Columna izquierda: lista de módulos (acordeón colapsable) -->
             <section class="module-list" aria-label="Lista de módulos">
-                <h2 class="section-title text-xl">Módulos del curso</h2>
-                <div id="moduleList" class="flex flex-col gap-3"></div>
+                <button type="button" class="module-list-toggle" id="moduleListToggle" aria-expanded="false" aria-controls="moduleListWrap">
+                    <span class="module-list-icon" aria-hidden="true">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                        </svg>
+                    </span>
+                    <span class="module-list-title">Módulos del curso</span>
+                    <span class="module-list-count" id="moduleListCount">6</span>
+                    <span class="module-list-chevron" aria-hidden="true">▾</span>
+                </button>
+                <div id="moduleListWrap" class="hidden">
+                    <div id="moduleList" class="flex flex-col gap-2"></div>
+                </div>
             </section>
 
             <!-- Columna derecha: contenido del módulo seleccionado -->
@@ -148,7 +160,7 @@
             const hamburgerBtn = document.getElementById('hamburgerBtn');
             const overlay = document.getElementById('sidebarOverlay');
             const KEY = 'plaindaber_sidebar_collapsed';
-            const mq = window.matchMedia('(max-width: 768px)');
+            const mq = window.matchMedia('(max-width: 800px)');
 
             const openDrawer = function () {
                 sidebar.classList.add('open');

@@ -443,7 +443,7 @@
 .feedback-alerta-error { background: #FEE2E2; border: 1px solid #EF4444; color: #B91C1C; }
 
 /* ---------- Responsive ---------- */
-@media (max-width: 768px) {
+@media (max-width: 800px) {
     .arrastre-arastre {
         grid-template-columns: 1fr;
     }
